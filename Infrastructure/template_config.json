@@ -1,0 +1,6 @@
+{
+  "ConnectionStrings": {
+    // Server has to be your local server (check SSMS connection)
+    "SqlClient": "Server=server_name;Database=Finance_Tracker;Trusted_Connection=true;TrustServerCertificate=true"
+  }
+}
