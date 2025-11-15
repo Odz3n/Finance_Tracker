@@ -6,5 +6,15 @@ namespace Client
         {
             InitializeComponent();
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void close_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
