@@ -31,11 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             panel1 = new Panel();
             login_signupBtn = new Button();
-            label6 = new Label();
+            login_registerLbl = new Label();
             label2 = new Label();
             pictureBox1 = new PictureBox();
             close = new Label();
-            label3 = new Label();
+            login_signinLbl = new Label();
             label4 = new Label();
             login_username = new TextBox();
             login_password = new TextBox();
@@ -50,7 +50,7 @@
             // 
             panel1.BackColor = Color.FromArgb(0, 25, 50);
             panel1.Controls.Add(login_signupBtn);
-            panel1.Controls.Add(label6);
+            panel1.Controls.Add(login_registerLbl);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(pictureBox1);
             panel1.Dock = DockStyle.Left;
@@ -77,16 +77,16 @@
             login_signupBtn.UseVisualStyleBackColor = false;
             login_signupBtn.Click += login_signupBtn_Click;
             // 
-            // label6
+            // login_registerLbl
             // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Tahoma", 16.125F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            label6.ForeColor = Color.White;
-            label6.Location = new Point(315, 890);
-            label6.Name = "label6";
-            label6.Size = new Size(335, 52);
-            label6.TabIndex = 2;
-            label6.Text = "REGISTER HERE";
+            login_registerLbl.AutoSize = true;
+            login_registerLbl.Font = new Font("Tahoma", 16.125F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            login_registerLbl.ForeColor = Color.White;
+            login_registerLbl.Location = new Point(315, 890);
+            login_registerLbl.Name = "login_registerLbl";
+            login_registerLbl.Size = new Size(335, 52);
+            login_registerLbl.TabIndex = 2;
+            login_registerLbl.Text = "REGISTER HERE";
             // 
             // label2
             // 
@@ -121,15 +121,15 @@
             close.Text = "X";
             close.Click += close_Click;
             // 
-            // label3
+            // login_signinLbl
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Tahoma", 16.125F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            label3.Location = new Point(1001, 191);
-            label3.Name = "label3";
-            label3.Size = new Size(178, 52);
-            label3.TabIndex = 2;
-            label3.Text = "SIGN IN";
+            login_signinLbl.AutoSize = true;
+            login_signinLbl.Font = new Font("Tahoma", 16.125F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            login_signinLbl.Location = new Point(1001, 191);
+            login_signinLbl.Name = "login_signinLbl";
+            login_signinLbl.Size = new Size(178, 52);
+            login_signinLbl.TabIndex = 2;
+            login_signinLbl.Text = "SIGN IN";
             // 
             // label4
             // 
@@ -204,7 +204,7 @@
             login_showPass.UseVisualStyleBackColor = true;
             login_showPass.CheckedChanged += login_showPass_CheckedChanged;
             // 
-            // Form_Login
+            // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -216,11 +216,11 @@
             Controls.Add(label5);
             Controls.Add(login_username);
             Controls.Add(label4);
-            Controls.Add(label3);
+            Controls.Add(login_signinLbl);
             Controls.Add(close);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "Form_Login";
+            Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form_Login";
             panel1.ResumeLayout(false);
@@ -236,7 +236,7 @@
         private Label close;
         private PictureBox pictureBox1;
         private Label label2;
-        private Label label3;
+        private Label login_signinLbl;
         private Label label4;
         private TextBox login_username;
         private TextBox login_password;
@@ -244,6 +244,6 @@
         private Button login_btn;
         private CheckBox login_showPass;
         private Button login_signupBtn;
-        private Label label6;
+        private Label login_registerLbl;
     }
 }

@@ -51,6 +51,24 @@ namespace Client
 
         private void login_signupBtn_Click(object sender, EventArgs e)
         {
+            if(login_signupBtn.Text == "SIGN UP")
+            {
+                login_registerLbl.Text = "LOG IN HERE";
+                login_signupBtn.Text = "SIGN IN";
+                login_signinLbl.Text = "REGISTRATION";
+                login_btn.Text = "REGISTER";
+            }
+            else if (login_signupBtn.Text == "SIGN IN")
+            {
+                login_registerLbl.Text = "REGISTER HERE";
+                login_signupBtn.Text = "SIGN UP";
+                login_signinLbl.Text = "SIGN IN";
+                login_btn.Text = "LOGIN";
+            }
+            else
+            {
+                return;
+            }
 
         }
 
@@ -66,7 +84,7 @@ namespace Client
             else if (login_username.Text == "admin" && login_password.Text == "password")
             {
                 MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Hide();
+                //this.Hide();
 
             }
             //------------
