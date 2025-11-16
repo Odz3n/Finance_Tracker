@@ -143,7 +143,7 @@
             panel5.Padding = new Padding(25);
             panel5.Size = new Size(1444, 300);
             panel5.TabIndex = 3;
-            panel5.Paint += this.panel5_Paint;
+
             // 
             // label2
             // 
