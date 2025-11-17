@@ -22,7 +22,7 @@ namespace Client
 
         }
 
-        private void panel2_Paint(object sender, PaintEventArgs e)
+        private void ClientPanel_pnl_Paint(object sender, PaintEventArgs e)
         {
             DashboardUI dashboard = new DashboardUI();
             ClientPanel_pnl.Controls.Add(dashboard);
@@ -31,7 +31,7 @@ namespace Client
 
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void ClientLogout_btn_Click(object sender, EventArgs e)
         {
             //hide client uiform show log in form
             this.Hide();
@@ -39,7 +39,7 @@ namespace Client
             login.Show();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void ClientWallet_btn_Click(object sender, EventArgs e)
         {
             //clear panel
             ClientPanel_pnl.Controls.Clear();
@@ -50,7 +50,7 @@ namespace Client
 
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        private void ClientUserPanel_pnl_Paint(object sender, PaintEventArgs e)
         {
 
         }
@@ -86,6 +86,12 @@ namespace Client
             transaction.Show();
             transaction.Dock = DockStyle.Fill;
 
+        }
+
+        private void ClientUI_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            Application.Exit();
         }
     }
 }

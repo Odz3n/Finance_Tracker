@@ -56,7 +56,7 @@ namespace Client
 
         private void login_signupBtn_Click(object sender, EventArgs e)
         {
-            if(login_signupBtn.Text == "SIGN UP")
+            if (login_signupBtn.Text == "SIGN UP")
             {
                 login_registerLbl.Text = "LOG IN HERE";
                 login_signupBtn.Text = "SIGN IN";
@@ -108,6 +108,15 @@ namespace Client
                     MessageBox.Show("Invalid username or password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void LoginUI_Load(object sender, EventArgs e)
+        {
+
+        }
+        private void LoginUI_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

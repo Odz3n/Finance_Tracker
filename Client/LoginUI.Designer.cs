@@ -210,6 +210,7 @@
             Name = "LoginUI";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Finance Tracker";
+            Load += LoginUI_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

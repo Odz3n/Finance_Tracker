@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientUI));
-            panel1 = new Panel();
+            ClientUserPanel_pnl = new Panel();
             ClientLogout_btn = new Button();
             ClientTransaction_btn = new Button();
             ClientCategory_btn = new Button();
@@ -39,27 +39,27 @@
             label1 = new Label();
             pictureBox1 = new PictureBox();
             ClientPanel_pnl = new Panel();
-            panel1.SuspendLayout();
+            ClientUserPanel_pnl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
-            // panel1
+            // ClientUserPanel_pnl
             // 
-            panel1.BackColor = Color.FromArgb(0, 25, 50);
-            panel1.Controls.Add(ClientLogout_btn);
-            panel1.Controls.Add(ClientTransaction_btn);
-            panel1.Controls.Add(ClientCategory_btn);
-            panel1.Controls.Add(ClientWallet_btn);
-            panel1.Controls.Add(ClientDashboard_btn);
-            panel1.Controls.Add(label2);
-            panel1.Controls.Add(label1);
-            panel1.Controls.Add(pictureBox1);
-            panel1.Dock = DockStyle.Left;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(400, 1009);
-            panel1.TabIndex = 0;
-            panel1.Paint += panel1_Paint;
+            ClientUserPanel_pnl.BackColor = Color.FromArgb(0, 25, 50);
+            ClientUserPanel_pnl.Controls.Add(ClientLogout_btn);
+            ClientUserPanel_pnl.Controls.Add(ClientTransaction_btn);
+            ClientUserPanel_pnl.Controls.Add(ClientCategory_btn);
+            ClientUserPanel_pnl.Controls.Add(ClientWallet_btn);
+            ClientUserPanel_pnl.Controls.Add(ClientDashboard_btn);
+            ClientUserPanel_pnl.Controls.Add(label2);
+            ClientUserPanel_pnl.Controls.Add(label1);
+            ClientUserPanel_pnl.Controls.Add(pictureBox1);
+            ClientUserPanel_pnl.Dock = DockStyle.Left;
+            ClientUserPanel_pnl.Location = new Point(0, 0);
+            ClientUserPanel_pnl.Name = "ClientUserPanel_pnl";
+            ClientUserPanel_pnl.Size = new Size(400, 1009);
+            ClientUserPanel_pnl.TabIndex = 0;
+            ClientUserPanel_pnl.Paint += ClientUserPanel_pnl_Paint;
             // 
             // ClientLogout_btn
             // 
@@ -80,7 +80,7 @@
             ClientLogout_btn.TabIndex = 8;
             ClientLogout_btn.Text = "Logout";
             ClientLogout_btn.UseVisualStyleBackColor = false;
-            ClientLogout_btn.Click += button5_Click;
+            ClientLogout_btn.Click += ClientLogout_btn_Click;
             // 
             // ClientTransaction_btn
             // 
@@ -137,7 +137,7 @@
             ClientWallet_btn.TabIndex = 4;
             ClientWallet_btn.Text = "Wallet";
             ClientWallet_btn.UseVisualStyleBackColor = false;
-            ClientWallet_btn.Click += button2_Click;
+            ClientWallet_btn.Click += ClientWallet_btn_Click;
             // 
             // ClientDashboard_btn
             // 
@@ -198,7 +198,7 @@
             ClientPanel_pnl.Name = "ClientPanel_pnl";
             ClientPanel_pnl.Size = new Size(1494, 1009);
             ClientPanel_pnl.TabIndex = 1;
-            ClientPanel_pnl.Paint += panel2_Paint;
+            ClientPanel_pnl.Paint += ClientPanel_pnl_Paint;
             // 
             // ClientUI
             // 
@@ -206,22 +206,22 @@
             AutoSize = true;
             ClientSize = new Size(1894, 1009);
             Controls.Add(ClientPanel_pnl);
-            Controls.Add(panel1);
+            Controls.Add(ClientUserPanel_pnl);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(6);
             Name = "ClientUI";
             Text = "Finance Tracker";
             Load += ClientUI_Load;
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            ClientUserPanel_pnl.ResumeLayout(false);
+            ClientUserPanel_pnl.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Panel panel1;
+        private Panel ClientUserPanel_pnl;
         private PictureBox pictureBox1;
         private Label label1;
         private Button ClientDashboard_btn;
