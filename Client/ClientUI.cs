@@ -21,5 +21,71 @@ namespace Client
         {
 
         }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+            DashboardUI dashboard = new DashboardUI();
+            ClientPanel_pnl.Controls.Add(dashboard);
+            dashboard.Show();
+            dashboard.Dock = DockStyle.Fill;
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            //hide client uiform show log in form
+            this.Hide();
+            LoginUI login = new LoginUI();
+            login.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //clear panel
+            ClientPanel_pnl.Controls.Clear();
+            WalletUI wallet = new WalletUI();
+            ClientPanel_pnl.Controls.Add(wallet);
+            wallet.Show();
+            wallet.Dock = DockStyle.Fill;
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void ClientDashboard_btn_Click(object sender, EventArgs e)
+        {
+            //clear panel
+            ClientPanel_pnl.Controls.Clear();
+            DashboardUI dashboard = new DashboardUI();
+            ClientPanel_pnl.Controls.Add(dashboard);
+            dashboard.Show();
+            dashboard.Dock = DockStyle.Fill;
+
+        }
+
+        private void ClientCategory_btn_Click(object sender, EventArgs e)
+        {
+            //clear panel
+            ClientPanel_pnl.Controls.Clear();
+            CategoryUI category = new CategoryUI();
+            ClientPanel_pnl.Controls.Add(category);
+            category.Show();
+            category.Dock = DockStyle.Fill;
+
+        }
+
+        private void ClientTransaction_btn_Click(object sender, EventArgs e)
+        {
+            //clear panel
+            ClientPanel_pnl.Controls.Clear();
+            TransactionUI transaction = new TransactionUI();
+            ClientPanel_pnl.Controls.Add(transaction);
+            transaction.Show();
+            transaction.Dock = DockStyle.Fill;
+
+        }
     }
 }

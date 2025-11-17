@@ -30,15 +30,15 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientUI));
             panel1 = new Panel();
-            button5 = new Button();
-            button4 = new Button();
-            button3 = new Button();
-            button2 = new Button();
-            button1 = new Button();
+            ClientLogout_btn = new Button();
+            ClientTransaction_btn = new Button();
+            ClientCategory_btn = new Button();
+            ClientWallet_btn = new Button();
+            ClientDashboard_btn = new Button();
             label2 = new Label();
             label1 = new Label();
             pictureBox1 = new PictureBox();
-            panel2 = new Panel();
+            ClientPanel_pnl = new Panel();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -46,11 +46,11 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(0, 25, 50);
-            panel1.Controls.Add(button5);
-            panel1.Controls.Add(button4);
-            panel1.Controls.Add(button3);
-            panel1.Controls.Add(button2);
-            panel1.Controls.Add(button1);
+            panel1.Controls.Add(ClientLogout_btn);
+            panel1.Controls.Add(ClientTransaction_btn);
+            panel1.Controls.Add(ClientCategory_btn);
+            panel1.Controls.Add(ClientWallet_btn);
+            panel1.Controls.Add(ClientDashboard_btn);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(pictureBox1);
@@ -59,98 +59,104 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(400, 1009);
             panel1.TabIndex = 0;
+            panel1.Paint += panel1_Paint;
             // 
-            // button5
+            // ClientLogout_btn
             // 
-            button5.BackColor = Color.FromArgb(0, 25, 50);
-            button5.Dock = DockStyle.Bottom;
-            button5.FlatAppearance.BorderSize = 0;
-            button5.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 50, 255);
-            button5.FlatAppearance.MouseOverBackColor = Color.Blue;
-            button5.FlatStyle = FlatStyle.Flat;
-            button5.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            button5.ForeColor = Color.White;
-            button5.Image = (Image)resources.GetObject("button5.Image");
-            button5.ImageAlign = ContentAlignment.MiddleLeft;
-            button5.Location = new Point(0, 931);
-            button5.Name = "button5";
-            button5.Padding = new Padding(15);
-            button5.Size = new Size(400, 78);
-            button5.TabIndex = 8;
-            button5.Text = "Logout";
-            button5.UseVisualStyleBackColor = false;
+            ClientLogout_btn.BackColor = Color.FromArgb(0, 25, 50);
+            ClientLogout_btn.Dock = DockStyle.Bottom;
+            ClientLogout_btn.FlatAppearance.BorderSize = 0;
+            ClientLogout_btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 50, 255);
+            ClientLogout_btn.FlatAppearance.MouseOverBackColor = Color.Blue;
+            ClientLogout_btn.FlatStyle = FlatStyle.Flat;
+            ClientLogout_btn.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            ClientLogout_btn.ForeColor = Color.White;
+            ClientLogout_btn.Image = (Image)resources.GetObject("ClientLogout_btn.Image");
+            ClientLogout_btn.ImageAlign = ContentAlignment.MiddleLeft;
+            ClientLogout_btn.Location = new Point(0, 931);
+            ClientLogout_btn.Name = "ClientLogout_btn";
+            ClientLogout_btn.Padding = new Padding(15);
+            ClientLogout_btn.Size = new Size(400, 78);
+            ClientLogout_btn.TabIndex = 8;
+            ClientLogout_btn.Text = "Logout";
+            ClientLogout_btn.UseVisualStyleBackColor = false;
+            ClientLogout_btn.Click += button5_Click;
             // 
-            // button4
+            // ClientTransaction_btn
             // 
-            button4.BackColor = Color.FromArgb(0, 25, 50);
-            button4.FlatAppearance.BorderSize = 0;
-            button4.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 50, 255);
-            button4.FlatAppearance.MouseOverBackColor = Color.Blue;
-            button4.FlatStyle = FlatStyle.Flat;
-            button4.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            button4.ForeColor = Color.White;
-            button4.Image = (Image)resources.GetObject("button4.Image");
-            button4.ImageAlign = ContentAlignment.MiddleLeft;
-            button4.Location = new Point(12, 690);
-            button4.Name = "button4";
-            button4.Size = new Size(367, 78);
-            button4.TabIndex = 7;
-            button4.Text = "Add Income";
-            button4.UseVisualStyleBackColor = false;
+            ClientTransaction_btn.BackColor = Color.FromArgb(0, 25, 50);
+            ClientTransaction_btn.FlatAppearance.BorderSize = 0;
+            ClientTransaction_btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 50, 255);
+            ClientTransaction_btn.FlatAppearance.MouseOverBackColor = Color.Blue;
+            ClientTransaction_btn.FlatStyle = FlatStyle.Flat;
+            ClientTransaction_btn.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            ClientTransaction_btn.ForeColor = Color.White;
+            ClientTransaction_btn.Image = (Image)resources.GetObject("ClientTransaction_btn.Image");
+            ClientTransaction_btn.ImageAlign = ContentAlignment.MiddleLeft;
+            ClientTransaction_btn.Location = new Point(12, 690);
+            ClientTransaction_btn.Name = "ClientTransaction_btn";
+            ClientTransaction_btn.Size = new Size(367, 78);
+            ClientTransaction_btn.TabIndex = 7;
+            ClientTransaction_btn.Text = "      Add Transactions";
+            ClientTransaction_btn.UseVisualStyleBackColor = false;
+            ClientTransaction_btn.Click += ClientTransaction_btn_Click;
             // 
-            // button3
+            // ClientCategory_btn
             // 
-            button3.BackColor = Color.FromArgb(0, 25, 50);
-            button3.FlatAppearance.BorderSize = 0;
-            button3.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 50, 255);
-            button3.FlatAppearance.MouseOverBackColor = Color.Blue;
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            button3.ForeColor = Color.White;
-            button3.Image = (Image)resources.GetObject("button3.Image");
-            button3.ImageAlign = ContentAlignment.MiddleLeft;
-            button3.Location = new Point(12, 574);
-            button3.Name = "button3";
-            button3.Size = new Size(367, 78);
-            button3.TabIndex = 5;
-            button3.Text = "Add Category";
-            button3.UseVisualStyleBackColor = false;
+            ClientCategory_btn.BackColor = Color.FromArgb(0, 25, 50);
+            ClientCategory_btn.FlatAppearance.BorderSize = 0;
+            ClientCategory_btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 50, 255);
+            ClientCategory_btn.FlatAppearance.MouseOverBackColor = Color.Blue;
+            ClientCategory_btn.FlatStyle = FlatStyle.Flat;
+            ClientCategory_btn.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            ClientCategory_btn.ForeColor = Color.White;
+            ClientCategory_btn.Image = (Image)resources.GetObject("ClientCategory_btn.Image");
+            ClientCategory_btn.ImageAlign = ContentAlignment.MiddleLeft;
+            ClientCategory_btn.Location = new Point(12, 574);
+            ClientCategory_btn.Name = "ClientCategory_btn";
+            ClientCategory_btn.Size = new Size(367, 78);
+            ClientCategory_btn.TabIndex = 5;
+            ClientCategory_btn.Text = "Add Category";
+            ClientCategory_btn.UseVisualStyleBackColor = false;
+            ClientCategory_btn.Click += ClientCategory_btn_Click;
             // 
-            // button2
+            // ClientWallet_btn
             // 
-            button2.BackColor = Color.FromArgb(0, 25, 50);
-            button2.FlatAppearance.BorderSize = 0;
-            button2.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 50, 255);
-            button2.FlatAppearance.MouseOverBackColor = Color.Blue;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            button2.ForeColor = Color.White;
-            button2.Image = (Image)resources.GetObject("button2.Image");
-            button2.ImageAlign = ContentAlignment.MiddleLeft;
-            button2.Location = new Point(12, 459);
-            button2.Name = "button2";
-            button2.Size = new Size(367, 78);
-            button2.TabIndex = 4;
-            button2.Text = "Wallet";
-            button2.UseVisualStyleBackColor = false;
+            ClientWallet_btn.BackColor = Color.FromArgb(0, 25, 50);
+            ClientWallet_btn.FlatAppearance.BorderSize = 0;
+            ClientWallet_btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 50, 255);
+            ClientWallet_btn.FlatAppearance.MouseOverBackColor = Color.Blue;
+            ClientWallet_btn.FlatStyle = FlatStyle.Flat;
+            ClientWallet_btn.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            ClientWallet_btn.ForeColor = Color.White;
+            ClientWallet_btn.Image = (Image)resources.GetObject("ClientWallet_btn.Image");
+            ClientWallet_btn.ImageAlign = ContentAlignment.MiddleLeft;
+            ClientWallet_btn.Location = new Point(12, 459);
+            ClientWallet_btn.Name = "ClientWallet_btn";
+            ClientWallet_btn.Size = new Size(367, 78);
+            ClientWallet_btn.TabIndex = 4;
+            ClientWallet_btn.Text = "Wallet";
+            ClientWallet_btn.UseVisualStyleBackColor = false;
+            ClientWallet_btn.Click += button2_Click;
             // 
-            // button1
+            // ClientDashboard_btn
             // 
-            button1.BackColor = Color.FromArgb(0, 25, 50);
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 50, 255);
-            button1.FlatAppearance.MouseOverBackColor = Color.Blue;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            button1.ForeColor = Color.White;
-            button1.Image = (Image)resources.GetObject("button1.Image");
-            button1.ImageAlign = ContentAlignment.MiddleLeft;
-            button1.Location = new Point(12, 351);
-            button1.Name = "button1";
-            button1.Size = new Size(367, 78);
-            button1.TabIndex = 3;
-            button1.Text = "Dashboard";
-            button1.UseVisualStyleBackColor = false;
+            ClientDashboard_btn.BackColor = Color.FromArgb(0, 25, 50);
+            ClientDashboard_btn.FlatAppearance.BorderSize = 0;
+            ClientDashboard_btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 50, 255);
+            ClientDashboard_btn.FlatAppearance.MouseOverBackColor = Color.Blue;
+            ClientDashboard_btn.FlatStyle = FlatStyle.Flat;
+            ClientDashboard_btn.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            ClientDashboard_btn.ForeColor = Color.White;
+            ClientDashboard_btn.Image = (Image)resources.GetObject("ClientDashboard_btn.Image");
+            ClientDashboard_btn.ImageAlign = ContentAlignment.MiddleLeft;
+            ClientDashboard_btn.Location = new Point(12, 351);
+            ClientDashboard_btn.Name = "ClientDashboard_btn";
+            ClientDashboard_btn.Size = new Size(367, 78);
+            ClientDashboard_btn.TabIndex = 3;
+            ClientDashboard_btn.Text = "Dashboard";
+            ClientDashboard_btn.UseVisualStyleBackColor = false;
+            ClientDashboard_btn.Click += ClientDashboard_btn_Click;
             // 
             // label2
             // 
@@ -185,20 +191,21 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
-            // panel2
+            // ClientPanel_pnl
             // 
-            panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(400, 0);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(1494, 1009);
-            panel2.TabIndex = 1;
+            ClientPanel_pnl.Dock = DockStyle.Fill;
+            ClientPanel_pnl.Location = new Point(400, 0);
+            ClientPanel_pnl.Name = "ClientPanel_pnl";
+            ClientPanel_pnl.Size = new Size(1494, 1009);
+            ClientPanel_pnl.TabIndex = 1;
+            ClientPanel_pnl.Paint += panel2_Paint;
             // 
             // ClientUI
             // 
             AutoScaleMode = AutoScaleMode.None;
             AutoSize = true;
             ClientSize = new Size(1894, 1009);
-            Controls.Add(panel2);
+            Controls.Add(ClientPanel_pnl);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -217,12 +224,12 @@
         private Panel panel1;
         private PictureBox pictureBox1;
         private Label label1;
-        private Button button1;
+        private Button ClientDashboard_btn;
         private Label label2;
-        private Button button3;
-        private Button button2;
-        private Button button4;
-        private Button button5;
-        private Panel panel2;
+        private Button ClientCategory_btn;
+        private Button ClientWallet_btn;
+        private Button ClientTransaction_btn;
+        private Button ClientLogout_btn;
+        private Panel ClientPanel_pnl;
     }
 }
