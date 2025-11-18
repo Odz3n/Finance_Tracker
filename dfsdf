@@ -1,0 +1,135 @@
+* [33mcommit 5b018c99b09a60c16bbfe23124c410d6e5b4d806[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/ClientUI[m[33m, [m[1;31morigin/feature/ClientUI[m[33m)[m
+[31m|[m Author: Mykola Lavrynovych <mykola0073008@gmail.com>
+[31m|[m Date:   Mon Nov 17 21:28:47 2025 +0200
+[31m|[m 
+[31m|[m     Finished UI
+[31m|[m 
+* [33mcommit 3ede2542ad9c226512d7fafc9ac7fc4e59bf0a0d[m
+[31m|[m Author: Mykola Lavrynovych <mykola0073008@gmail.com>
+[31m|[m Date:   Mon Nov 17 21:13:48 2025 +0200
+[31m|[m 
+[31m|[m     UI Done
+[31m|[m 
+* [33mcommit e2bafb39039e75a9b60d93983250044c35f55740[m
+[31m|[m Author: Mykola Lavrynovych <mykola0073008@gmail.com>
+[31m|[m Date:   Mon Nov 17 18:25:42 2025 +0200
+[31m|[m 
+[31m|[m     Client UI
+[31m|[m 
+* [33mcommit aee0b4e4fd8a1f871693232296a91f2f4b3dec70[m
+[31m|[m Author: Mykola Lavrynovych <mykola0073008@gmail.com>
+[31m|[m Date:   Sun Nov 16 03:06:47 2025 +0200
+[31m|[m 
+[31m|[m     sync
+[31m|[m 
+* [33mcommit 72278f455e0b458a1c3b69446ef1ac62050bb38b[m
+[31m|[m Author: Mykola Lavrynovych <mykola0073008@gmail.com>
+[31m|[m Date:   Sun Nov 16 03:04:39 2025 +0200
+[31m|[m 
+[31m|[m     sync
+[31m|[m 
+* [33mcommit 29a4cc7a2ae99067ba692748075652eea3ac0fa1[m
+[31m|[m Author: Mykola Lavrynovych <mykola0073008@gmail.com>
+[31m|[m Date:   Sun Nov 16 02:48:28 2025 +0200
+[31m|[m 
+[31m|[m     SYNC
+[31m|[m 
+* [33mcommit 181238b29fea3f5e81079d1ba7f927101b7ef447[m
+[31m|[m Author: Mykola Lavrynovych <mykola0073008@gmail.com>
+[31m|[m Date:   Sun Nov 16 01:52:58 2025 +0200
+[31m|[m 
+[31m|[m     sync
+[31m|[m 
+* [33mcommit ab07bf3af1c46f2149070d1514e52a50638d670b[m
+[31m|[m Author: Mykola Lavrynovych <mykola0073008@gmail.com>
+[31m|[m Date:   Sun Nov 16 01:33:58 2025 +0200
+[31m|[m 
+[31m|[m     Client UI
+[31m|[m 
+* [33mcommit f12479a30aba041e32e731b3740d4289975cf2f9[m
+[31m|[m Author: Mykola Lavrynovych <mykola0073008@gmail.com>
+[31m|[m Date:   Sun Nov 16 00:56:09 2025 +0200
+[31m|[m 
+[31m|[m     sync
+[31m|[m   
+*   [33mcommit acb6dbc82034d1b0eb6a4a61f3ca93f4d45c78e0[m
+[32m|[m[33m\[m  Merge: 843b5ac 41bcc6d
+[32m|[m [33m|[m Author: Nick <76704812+mykola3008@users.noreply.github.com>
+[32m|[m [33m|[m Date:   Sat Nov 15 22:27:59 2025 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     Merge branch 'Odz3n:main' into feature/ClientUI
+[32m|[m [33m|[m   
+[32m|[m *   [33mcommit 41bcc6d35411e858871d1f4d50b36ccd4b9c2cac[m[33m ([m[1;31mupstream/main[m[33m, [m[1;31mupstream/HEAD[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+[32m|[m [34m|[m[35m\[m  Merge: 4ab52a4 1437b5d
+[32m|[m [34m|[m [35m|[m Author: Odz3n <139064434+Odz3n@users.noreply.github.com>
+[32m|[m [34m|[m [35m|[m Date:   Tue Nov 11 23:18:33 2025 +0200
+[32m|[m [34m|[m [35m|[m 
+[32m|[m [34m|[m [35m|[m     Merge pull request #1 from Odz3n/develop
+[32m|[m [34m|[m [35m|[m     
+[32m|[m [34m|[m [35m|[m     Initial infrastructure setup
+[32m|[m [34m|[m [35m|[m 
+* [34m|[m [35m|[m [33mcommit 843b5acd4250fa0980edf19382bcf9170ae37cfc[m
+[35m|[m [34m|[m [35m|[m Author: Mykola Lavrynovych <mykola0073008@gmail.com>
+[35m|[m [34m|[m [35m|[m Date:   Sat Nov 15 22:26:52 2025 +0200
+[35m|[m [34m|[m [35m|[m 
+[35m|[m [34m|[m [35m|[m     sync
+[35m|[m [34m|[m [35m|[m 
+* [34m|[m [35m|[m [33mcommit 0317c143528f4d4d6fe90968376819da74ab6e6e[m
+[35m|[m [34m|[m [35m|[m Author: Mykola Lavrynovych <mykola0073008@gmail.com>
+[35m|[m [34m|[m [35m|[m Date:   Sat Nov 15 21:58:36 2025 +0200
+[35m|[m [34m|[m [35m|[m 
+[35m|[m [34m|[m [35m|[m     ClientUI added
+[35m|[m [34m|[m [35m|[m 
+* [34m|[m [35m|[m [33mcommit 59de8bc4141965d8631166571ffdecc2e1920a87[m
+[35m|[m [34m|[m [35m|[m Author: Mykola Lavrynovych <mykola0073008@gmail.com>
+[35m|[m [34m|[m [35m|[m Date:   Sat Nov 15 21:38:45 2025 +0200
+[35m|[m [34m|[m [35m|[m 
+[35m|[m [34m|[m [35m|[m     save
+[35m|[m [34m|[m [35m|[m 
+* [34m|[m [35m|[m [33mcommit c2a71149f54026fa51ed2a8a8aa253ce001fab15[m
+[35m|[m [34m|[m [35m|[m Author: Mykola Lavrynovych <mykola0073008@gmail.com>
+[35m|[m [34m|[m [35m|[m Date:   Sat Nov 15 21:21:43 2025 +0200
+[35m|[m [34m|[m [35m|[m 
+[35m|[m [34m|[m [35m|[m     Register added
+[35m|[m [34m|[m [35m|[m 
+* [34m|[m [35m|[m [33mcommit a93dfb01cb2c7994eb758b017c917ba950eff07e[m
+[35m|[m [34m|[m [35m|[m Author: Mykola Lavrynovych <mykola0073008@gmail.com>
+[35m|[m [34m|[m [35m|[m Date:   Sat Nov 15 21:05:56 2025 +0200
+[35m|[m [34m|[m [35m|[m 
+[35m|[m [34m|[m [35m|[m     Login form final
+[35m|[m [34m|[m [35m|[m 
+* [34m|[m [35m|[m [33mcommit b85e95cad6871a3bef5812d2182383a899c9cc43[m
+[35m|[m [34m|[m[35m/[m  Author: Mykola Lavrynovych <mykola0073008@gmail.com>
+[35m|[m[35m/[m[34m|[m   Date:   Sat Nov 15 20:29:33 2025 +0200
+[35m|[m [34m|[m   
+[35m|[m [34m|[m       Login Interface
+[35m|[m [34m|[m 
+* [34m|[m [33mcommit 1437b5d474369cc412107188192de2af4fcea223[m[33m ([m[1;31morigin/develop[m[33m, [m[1;32mdevelop[m[33m)[m
+[34m|[m[34m/[m  Author: Morozov Stanislav <libertadintegra@gmail.com>
+[34m|[m   Date:   Tue Nov 11 23:09:10 2025 +0200
+[34m|[m   
+[34m|[m       Initial infrastructure setup
+[34m|[m 
+* [33mcommit 4ab52a4205a4ca712d0fd8dbc4443858e470ddde[m
+[35m|[m Author: Morozov Stanislav <libertadintegra@gmail.com>
+[35m|[m Date:   Tue Nov 11 20:32:22 2025 +0200
+[35m|[m 
+[35m|[m     Add packages to infrastructure
+[35m|[m 
+* [33mcommit 63db938c5a0bdd3773cbe133d16349a55e50c3ee[m
+[35m|[m Author: Morozov Stanislav <libertadintegra@gmail.com>
+[35m|[m Date:   Tue Nov 11 19:43:51 2025 +0200
+[35m|[m 
+[35m|[m     Add PasswordHelper class
+[35m|[m 
+* [33mcommit 2de0792d5035addc37bd1f414089be128cc31402[m
+[35m|[m Author: Morozov Stanislav <libertadintegra@gmail.com>
+[35m|[m Date:   Tue Nov 11 19:15:59 2025 +0200
+[35m|[m 
+[35m|[m     Add project files.
+[35m|[m 
+* [33mcommit f762042c2f11ce2bcd21eaea8f5e90652bf3e83a[m
+  Author: Morozov Stanislav <libertadintegra@gmail.com>
+  Date:   Tue Nov 11 19:15:58 2025 +0200
+  
+      Add .gitattributes, .gitignore, and README.md.
