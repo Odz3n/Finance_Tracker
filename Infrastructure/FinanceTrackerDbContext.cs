@@ -37,7 +37,7 @@ namespace Infrastructure
                 w.HasMany(w => w.Transactions)
                 .WithOne(t => t.Wallet)
                 .HasForeignKey(t => t.WalletId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull);
             });
 
             // TransCat <=> Transactions
@@ -46,7 +46,7 @@ namespace Infrastructure
                 tc.HasMany(tc => tc.Transactions)
                 .WithOne(t => t.TransactionCategory)
                 .HasForeignKey(t => t.TransactionCategoryId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull);
             });
 
             // TransType <=> TransCat
