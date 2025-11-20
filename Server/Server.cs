@@ -1,5 +1,7 @@
 ﻿using Domain;
 using Infrastructure;
+using Shared;
+using Server.Events;
 using Shared.Requests;
 using Shared.Responses;
 using System;
@@ -20,6 +22,10 @@ namespace Server
         DbManager _db;
 
         List<ConnectedUser> _connectedUsers;
+        object? connectedUsersLockObject = new object();
+
+        public event EventHandler<UserConnectedEventArgs> UserConnected;
+        public event EventHandler<MessageReceivedEventArgs> MessageReceived;
 
         const int BUFFER_SIZE = 2048;
 
@@ -76,6 +82,13 @@ namespace Server
                         if (concreteRequest != null)
                             _ = HandleRegistrationRequestAsync(concreteRequest, token);
                     }
+
+                    if (baseRequest?.Type == RequestType.Auth)
+                    {
+                        var concreteRequest = JsonSerializer.Deserialize<AuthorizationRequest>(json);
+                        if (concreteRequest != null)
+                            _ = HandleAuthorizationRequestAsync(concreteRequest, token);
+                    }
                 }
             }
             catch (Exception ex)
@@ -101,6 +114,76 @@ namespace Server
             catch (Exception ex)
             {
                 Console.WriteLine($"HandleRegistrationRequestAsync: {ex.Message}");
+            }
+        }
+        private async Task HandleAuthorizationRequestAsync(AuthorizationRequest request, CancellationToken token)
+        {
+            try
+            {
+                var login = request?.Login;
+                var password = request?.Password;
+                var sender = request?.Sender;
+
+                var result = await _db.VerifyUser(login, password);
+
+                var response = new AuthorizationResponse();
+                if (result != null)
+                {
+                    ConnectedUser user = new ConnectedUser
+                    {
+                        Id = result.Id,
+                        Login = result.Login,
+                        Client = sender
+                    };
+
+                    lock(connectedUsersLockObject)
+                    {
+                        _connectedUsers.Add(user);
+                    }
+                    UserConnected.Invoke(this,
+                            new UserConnectedEventArgs { User = user });
+
+                    response.IsSuccess = true;
+                    response.Message = "Successfully logined.";
+                    await RespondToSenderAsync(sender, response, token);
+                    _ = HandleConnectedUserAsync(user, token);
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.Message = "Login failed. Incorrect password or username.";
+                    await RespondToSenderAsync(sender, response, token);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"HandleAuthorizationRequestAsync: {ex.Message}");
+            }
+        }
+        private async Task HandleConnectedUserAsync(ConnectedUser user, CancellationToken token)
+        {
+            try
+            {
+                var stream = user.Client.GetStream();
+                var buffer = new byte[BUFFER_SIZE];
+                while (!token.IsCancellationRequested)
+                {
+                    var size = await stream.ReadAsync(buffer, 0, buffer.Length, token);
+                    if (size == 0)
+                        break;
+
+                    var json = Encoding.UTF8.GetString(buffer, 0, size);
+                    var baseRequest = JsonSerializer.Deserialize<Request>(json);
+                    if (baseRequest?.Type == RequestType.Add)
+                    {
+                        //var concreteRequest = JsonSerializer.Deserialize<>(json);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"HandleConnectedUserAsync: {ex.Message}");
             }
         }
         private async Task RespondToSenderAsync(TcpClient sender, Response response, CancellationToken token)
