@@ -62,9 +62,20 @@ namespace Client
                 login_signupBtn.Text = "SIGN IN";
                 login_signinLbl.Text = "REGISTRATION";
                 login_btn.Text = "REGISTER";
+                //show and enable registration form fields
+                login_firstname_BX.Visible = true;
+                login_lastname_BX.Visible = true;
+                login_firstname_lbl.Visible = true;
+                login_lastname_lbl.Visible = true;
+                login_firstname_BX.Enabled = true;
+                login_lastname_BX.Enabled = true;
             }
             else if (login_signupBtn.Text == "SIGN IN")
             {
+                login_firstname_BX.Visible = false;
+                login_lastname_BX.Visible = false;
+                login_firstname_lbl.Visible = false;
+                login_lastname_lbl.Visible = false;
                 login_registerLbl.Text = "REGISTER HERE";
                 login_signupBtn.Text = "SIGN UP";
                 login_signinLbl.Text = "SIGN IN";

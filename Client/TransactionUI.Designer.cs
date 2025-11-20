@@ -28,11 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             panel2 = new Panel();
             TransactionList = new DataGridView();
             label3 = new Label();
             panel1 = new Panel();
+            TransactionAddAmount_BX = new TextBox();
             TransactionFilterCategory_BX = new ComboBox();
             label12 = new Label();
             TransactionFilterWallet_BX = new ComboBox();
@@ -44,7 +45,6 @@
             label4 = new Label();
             TransactionAddDateTime = new DateTimePicker();
             TransactionAddDetails_BX = new TextBox();
-            TransactionAddAmount_BX = new ComboBox();
             label8 = new Label();
             label7 = new Label();
             TransactionFilterEndDate_BX = new DateTimePicker();
@@ -77,14 +77,14 @@
             // TransactionList
             // 
             TransactionList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(0, 25, 50);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            TransactionList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(0, 25, 50);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            TransactionList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             TransactionList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             TransactionList.Location = new Point(29, 103);
             TransactionList.Name = "TransactionList";
@@ -105,6 +105,7 @@
             // panel1
             // 
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(TransactionAddAmount_BX);
             panel1.Controls.Add(TransactionFilterCategory_BX);
             panel1.Controls.Add(label12);
             panel1.Controls.Add(TransactionFilterWallet_BX);
@@ -116,7 +117,6 @@
             panel1.Controls.Add(label4);
             panel1.Controls.Add(TransactionAddDateTime);
             panel1.Controls.Add(TransactionAddDetails_BX);
-            panel1.Controls.Add(TransactionAddAmount_BX);
             panel1.Controls.Add(label8);
             panel1.Controls.Add(label7);
             panel1.Controls.Add(TransactionFilterEndDate_BX);
@@ -135,6 +135,14 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1431, 425);
             panel1.TabIndex = 5;
+            // 
+            // TransactionAddAmount_BX
+            // 
+            TransactionAddAmount_BX.BorderStyle = BorderStyle.FixedSingle;
+            TransactionAddAmount_BX.Location = new Point(212, 192);
+            TransactionAddAmount_BX.Name = "TransactionAddAmount_BX";
+            TransactionAddAmount_BX.Size = new Size(348, 39);
+            TransactionAddAmount_BX.TabIndex = 41;
             // 
             // TransactionFilterCategory_BX
             // 
@@ -236,14 +244,6 @@
             TransactionAddDetails_BX.ScrollBars = ScrollBars.Vertical;
             TransactionAddDetails_BX.Size = new Size(370, 162);
             TransactionAddDetails_BX.TabIndex = 30;
-            // 
-            // TransactionAddAmount_BX
-            // 
-            TransactionAddAmount_BX.FormattingEnabled = true;
-            TransactionAddAmount_BX.Location = new Point(212, 193);
-            TransactionAddAmount_BX.Name = "TransactionAddAmount_BX";
-            TransactionAddAmount_BX.Size = new Size(348, 40);
-            TransactionAddAmount_BX.TabIndex = 29;
             // 
             // label8
             // 
@@ -433,7 +433,6 @@
         private Label label1;
         private ComboBox TransactionAddCategory_BX;
         private Label label5;
-        private ComboBox TransactionAddAmount_BX;
         private Label label8;
         private Label label7;
         private DateTimePicker TransactionFilterEndDate_BX;
@@ -449,5 +448,6 @@
         private Label label10;
         private ComboBox TransactionFilterCategory_BX;
         private Label label12;
+        private TextBox TransactionAddAmount_BX;
     }
 }
