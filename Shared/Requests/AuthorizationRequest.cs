@@ -13,6 +13,5 @@ namespace Shared.Requests
         public override RequestType? Type => RequestType.Auth;
         public string? Login { get; set; }
         public string? Password { get; set; }
-        public TcpClient? Client { get; set; }
     }
 }

@@ -1,15 +1,13 @@
-﻿using Shared.Requests;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shared.Responses
+namespace Infrastructure
 {
-    public class AuthorizationResponse : Response
+    public class DbOperationResult
     {
-        public override ResponseType? Type => ResponseType.Auth;
         public bool IsSuccess { get; set; }
         public string? Message { get; set; }
     }

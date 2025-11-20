@@ -142,7 +142,6 @@
             login_username.Name = "login_username";
             login_username.Size = new Size(858, 57);
             login_username.TabIndex = 4;
-            login_username.TextChanged += textBox1_TextChanged;
             // 
             // login_password
             // 

@@ -22,6 +22,8 @@ namespace Shared.Responses
                 {
                     case (int)ResponseType.Reg:
                         return jsonDoc.Deserialize<RegistrationResponse>(options);
+                    case (int)ResponseType.Auth:
+                        return jsonDoc.Deserialize<AuthorizationResponse>(options);
                     default:
                         throw new JsonException("'Type' doesn't match a known derived type");
                 }

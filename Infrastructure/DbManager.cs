@@ -16,10 +16,15 @@ namespace Infrastructure
         {
             _context = context;
         }
-        public async Task AddUserAsync(string login, string firstName, string lastName, string passHash, string passSalt)
+        public async Task<DbOperationResult> AddUserAsync(string login, string firstName, string lastName, string passHash, string passSalt)
         {
             try
             {
+                if (_context.Users.FirstOrDefault(u => u.Login == login) != null)
+                {
+                    return new DbOperationResult { IsSuccess = false, Message = $"User '{login}' exists." };
+                }
+
                 User user = new User
                 {
                     Login = login,
@@ -31,10 +36,12 @@ namespace Infrastructure
 
                 await _context.Users.AddAsync(user);
                 await _context.SaveChangesAsync();
+                return new DbOperationResult { IsSuccess = true, Message = $"'{login}' registered successfully." };
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"AddUserAsync: {ex.Message}");
+                return new DbOperationResult { IsSuccess = false, Message = $"Exception occurd '{ex.Message}'" };
             }
         }
         public async Task<User?> GetUserByLoginAsync(string login)

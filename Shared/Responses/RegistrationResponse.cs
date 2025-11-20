@@ -10,7 +10,7 @@ namespace Shared.Responses
     public class RegistrationResponse : Response
     {
         public override ResponseType? Type => ResponseType.Reg;
-        public bool? IsSuccess { get; set; }
+        public bool IsSuccess { get; set; }
         public string? Message { get; set; }
     }
 }

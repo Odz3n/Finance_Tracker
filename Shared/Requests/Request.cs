@@ -12,6 +12,7 @@ namespace Shared.Requests
     {
         Reg,
         Auth,
+        Disconnect,
         Get,
         Add,
         Delete,
@@ -22,7 +23,6 @@ namespace Shared.Requests
     {
         public string? Id { get; } = Guid.NewGuid().ToString();
         public abstract RequestType? Type { get; }
-        public TcpClient? Sender { get; set; }
         public DateTime? SentAt { get; } = DateTime.Now;
     }
 }
