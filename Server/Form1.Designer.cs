@@ -28,12 +28,92 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form_Login";
+            tbIp = new TextBox();
+            lbActiveUsers = new ListBox();
+            tbPort = new TextBox();
+            btnStart = new Button();
+            btnStop = new Button();
+            btnDisconnect = new Button();
+            SuspendLayout();
+            // 
+            // tbIp
+            // 
+            tbIp.Location = new Point(168, 12);
+            tbIp.Name = "tbIp";
+            tbIp.PlaceholderText = "IP";
+            tbIp.Size = new Size(100, 23);
+            tbIp.TabIndex = 0;
+            tbIp.Text = "127.0.0.1";
+            // 
+            // lbActiveUsers
+            // 
+            lbActiveUsers.FormattingEnabled = true;
+            lbActiveUsers.Location = new Point(12, 12);
+            lbActiveUsers.Name = "lbActiveUsers";
+            lbActiveUsers.ScrollAlwaysVisible = true;
+            lbActiveUsers.Size = new Size(150, 139);
+            lbActiveUsers.TabIndex = 1;
+            // 
+            // tbPort
+            // 
+            tbPort.Location = new Point(168, 41);
+            tbPort.Name = "tbPort";
+            tbPort.PlaceholderText = "Port";
+            tbPort.Size = new Size(100, 23);
+            tbPort.TabIndex = 2;
+            // 
+            // btnStart
+            // 
+            btnStart.Location = new Point(193, 70);
+            btnStart.Name = "btnStart";
+            btnStart.Size = new Size(75, 23);
+            btnStart.TabIndex = 3;
+            btnStart.Text = "Start";
+            btnStart.UseVisualStyleBackColor = true;
+            btnStart.Click += btnStart_Click;
+            // 
+            // btnStop
+            // 
+            btnStop.Location = new Point(193, 99);
+            btnStop.Name = "btnStop";
+            btnStop.Size = new Size(75, 23);
+            btnStop.TabIndex = 4;
+            btnStop.Text = "Stop";
+            btnStop.UseVisualStyleBackColor = true;
+            // 
+            // btnDisconnect
+            // 
+            btnDisconnect.Location = new Point(193, 128);
+            btnDisconnect.Name = "btnDisconnect";
+            btnDisconnect.Size = new Size(75, 23);
+            btnDisconnect.TabIndex = 5;
+            btnDisconnect.Text = "Disconnect";
+            btnDisconnect.UseVisualStyleBackColor = true;
+            // 
+            // Form_Login
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(278, 163);
+            Controls.Add(btnDisconnect);
+            Controls.Add(btnStop);
+            Controls.Add(btnStart);
+            Controls.Add(tbPort);
+            Controls.Add(lbActiveUsers);
+            Controls.Add(tbIp);
+            Name = "Form_Login";
+            Text = "Server";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private TextBox tbIp;
+        private ListBox lbActiveUsers;
+        private TextBox tbPort;
+        private Button btnStart;
+        private Button btnStop;
+        private Button btnDisconnect;
     }
 }

@@ -20,6 +20,6 @@ namespace Domain
         [Required]
         public string PasswordSalt { get; set; } = null!;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public List<Wallet> Wallets { get; set; } = new List<Wallet>();
+        public virtual List<Wallet> Wallets { get; set; } = new List<Wallet>();
     }
 }

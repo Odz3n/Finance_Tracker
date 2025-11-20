@@ -20,6 +20,6 @@ namespace Domain
         [MaxLength(5)]
         public string? Symbol { get; set; }
         public decimal Rate { get; set; }
-        public List<Wallet> Wallets { get; set; } = new List<Wallet>();
+        public virtual List<Wallet> Wallets { get; set; } = new List<Wallet>();
     }
 }
