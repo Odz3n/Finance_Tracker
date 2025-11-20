@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -36,12 +37,6 @@ namespace Infrastructure
                 Console.WriteLine($"AddUserAsync: {ex.Message}");
             }
         }
-
-        public void Dispose()
-        {
-            _context?.Dispose();
-        }
-
         public async Task<User?> GetUserByLoginAsync(string login)
         {
             try
@@ -54,6 +49,30 @@ namespace Infrastructure
                 Console.WriteLine($"GetUserByLoginAsync: {ex.Message}");
                 return null;
             }
+        }
+        public async Task<User?> VerifyUser(string login, string pass)
+        {
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Login == login);
+
+                if (user == null)
+                    return null;
+
+                if (PasswordHelper.VerifyPassword(pass, user.PasswordHash, user.PasswordSalt) == true)
+                    return user;
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"VerifyUserExistence: {ex.Message}");
+                return null;
+            }
+        }
+        public void Dispose()
+        {
+            _context?.Dispose();
         }
     }
 }

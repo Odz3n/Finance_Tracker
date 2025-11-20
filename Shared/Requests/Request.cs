@@ -17,7 +17,7 @@ namespace Shared.Requests
         Delete,
         Update
     }
-    [JsonConverter(typeof(Request))]
+    [JsonConverter(typeof(RequestConverter))]
     public abstract class Request
     {
         public string? Id { get; } = Guid.NewGuid().ToString();

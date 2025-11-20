@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Shared.Responses
 {
-    public class RegistrationResponse : Response
+    public class AuthorizationResponse : Response
     {
-        public override ResponseType? Type => ResponseType.Reg;
+        public override ResponseType? Type => ResponseType.Auth;
         public bool? IsSuccess { get; set; }
         public string? Message { get; set; }
     }
