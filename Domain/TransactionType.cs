@@ -14,6 +14,6 @@ namespace Domain
         [Required]
         [MaxLength(100)]
         public string Name { get; set; } = null!;
-        public List<TransactionCategory> TransactionCategories { get; set; } = new List<TransactionCategory>();
+        public virtual List<TransactionCategory> TransactionCategories { get; set; } = new List<TransactionCategory>();
     }
 }

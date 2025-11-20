@@ -15,7 +15,7 @@ namespace Domain
         [MaxLength(100)]
         public string Name { get; set; } = null!;
         public int TransactionTypeId { get; set; }
-        public TransactionType TransactionType { get; set; } = null!;
-        public List<Transaction> Transactions { get; set; } = new List<Transaction>();
+        public virtual TransactionType TransactionType { get; set; } = null!;
+        public virtual List<Transaction> Transactions { get; set; } = new List<Transaction>();
     }
 }

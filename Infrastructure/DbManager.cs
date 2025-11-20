@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure
 {
-    public class DbManager
+    public class DbManager: IDisposable
     {
         readonly FinanceTrackerDbContext? _context;
         public DbManager(FinanceTrackerDbContext context)
@@ -36,6 +36,12 @@ namespace Infrastructure
                 Console.WriteLine($"AddUserAsync: {ex.Message}");
             }
         }
+
+        public void Dispose()
+        {
+            _context?.Dispose();
+        }
+
         public async Task<User?> GetUserByLoginAsync(string login)
         {
             try

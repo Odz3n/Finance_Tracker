@@ -19,8 +19,8 @@ namespace Domain
         public decimal Balance { get; set; }
         public int UserId { get; set; }
         public int CurrencyId { get; set; }
-        public User User { get; set; } = null!;
-        public Currency Currency { get; set; } = null!;
-        public List<Transaction> Transactions { get; set; } = new List<Transaction>();
+        public virtual User User { get; set; } = null!;
+        public virtual Currency Currency { get; set; } = null!;
+        public virtual List<Transaction> Transactions { get; set; } = new List<Transaction>();
     }
 }
