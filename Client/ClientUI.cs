@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared.Requests;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,13 @@ namespace Client
 {
     public partial class ClientUI : Form
     {
-        public ClientUI()
+        Client _client;
+        CancellationTokenSource _cts;
+        public ClientUI(Client client)
         {
             InitializeComponent();
+            _client = client;
+            _cts = new CancellationTokenSource();
         }
 
         private void ClientUI_Load(object sender, EventArgs e)
@@ -31,9 +36,12 @@ namespace Client
 
         }
 
-        private void ClientLogout_btn_Click(object sender, EventArgs e)
+        private async void ClientLogout_btn_Click(object sender, EventArgs e)
         {
             //hide client uiform show log in form
+            var request = new DisconnectRequest();
+            await _client.SendRequestAsync(request, _cts.Token);
+
             this.Hide();
             LoginUI login = new LoginUI();
             login.Show();

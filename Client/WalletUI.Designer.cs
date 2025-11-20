@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             panel1 = new Panel();
+            WalletNameBX = new TextBox();
             WalletCurrencyBX = new ComboBox();
-            WalletNameBX = new ComboBox();
             WalletDel_btn = new Button();
             WalletUpdate_btn = new Button();
             WalletAdd_btn = new Button();
@@ -48,8 +48,8 @@
             // panel1
             // 
             panel1.BackColor = Color.White;
-            panel1.Controls.Add(WalletCurrencyBX);
             panel1.Controls.Add(WalletNameBX);
+            panel1.Controls.Add(WalletCurrencyBX);
             panel1.Controls.Add(WalletDel_btn);
             panel1.Controls.Add(WalletUpdate_btn);
             panel1.Controls.Add(WalletAdd_btn);
@@ -60,6 +60,14 @@
             panel1.Size = new Size(400, 950);
             panel1.TabIndex = 0;
             // 
+            // WalletNameBX
+            // 
+            WalletNameBX.BorderStyle = BorderStyle.FixedSingle;
+            WalletNameBX.Location = new Point(21, 96);
+            WalletNameBX.Name = "WalletNameBX";
+            WalletNameBX.Size = new Size(354, 39);
+            WalletNameBX.TabIndex = 13;
+            // 
             // WalletCurrencyBX
             // 
             WalletCurrencyBX.FormattingEnabled = true;
@@ -67,14 +75,6 @@
             WalletCurrencyBX.Name = "WalletCurrencyBX";
             WalletCurrencyBX.Size = new Size(354, 40);
             WalletCurrencyBX.TabIndex = 12;
-            // 
-            // WalletNameBX
-            // 
-            WalletNameBX.FormattingEnabled = true;
-            WalletNameBX.Location = new Point(27, 96);
-            WalletNameBX.Name = "WalletNameBX";
-            WalletNameBX.Size = new Size(348, 40);
-            WalletNameBX.TabIndex = 11;
             // 
             // WalletDel_btn
             // 
@@ -161,14 +161,14 @@
             // WalletDataList
             // 
             WalletDataList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(0, 25, 50);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            WalletDataList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(0, 25, 50);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            WalletDataList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             WalletDataList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             WalletDataList.Location = new Point(29, 96);
             WalletDataList.Name = "WalletDataList";
@@ -214,7 +214,7 @@
         private Label label3;
         private Button WalletDel_btn;
         private ComboBox WalletCurrencyBX;
-        private ComboBox WalletNameBX;
         private DataGridView WalletDataList;
+        private TextBox WalletNameBX;
     }
 }

@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             panel2 = new Panel();
             CategoryDataList = new DataGridView();
             label3 = new Label();
             panel1 = new Panel();
+            CategoryNameBX = new TextBox();
             CategoryTypeBX = new ComboBox();
-            CategoryNameBX = new ComboBox();
             CategoryDel_btn = new Button();
             CategoryUpdate_btn = new Button();
             CategoryAdd_btn = new Button();
@@ -58,14 +58,14 @@
             // CategoryDataList
             // 
             CategoryDataList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(0, 25, 50);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            CategoryDataList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(0, 25, 50);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            CategoryDataList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             CategoryDataList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             CategoryDataList.Location = new Point(29, 96);
             CategoryDataList.Name = "CategoryDataList";
@@ -86,8 +86,8 @@
             // panel1
             // 
             panel1.BackColor = Color.White;
-            panel1.Controls.Add(CategoryTypeBX);
             panel1.Controls.Add(CategoryNameBX);
+            panel1.Controls.Add(CategoryTypeBX);
             panel1.Controls.Add(CategoryDel_btn);
             panel1.Controls.Add(CategoryUpdate_btn);
             panel1.Controls.Add(CategoryAdd_btn);
@@ -98,6 +98,14 @@
             panel1.Size = new Size(400, 950);
             panel1.TabIndex = 2;
             // 
+            // CategoryNameBX
+            // 
+            CategoryNameBX.BorderStyle = BorderStyle.FixedSingle;
+            CategoryNameBX.Location = new Point(21, 97);
+            CategoryNameBX.Name = "CategoryNameBX";
+            CategoryNameBX.Size = new Size(354, 39);
+            CategoryNameBX.TabIndex = 13;
+            // 
             // CategoryTypeBX
             // 
             CategoryTypeBX.FormattingEnabled = true;
@@ -105,14 +113,6 @@
             CategoryTypeBX.Name = "CategoryTypeBX";
             CategoryTypeBX.Size = new Size(354, 40);
             CategoryTypeBX.TabIndex = 12;
-            // 
-            // CategoryNameBX
-            // 
-            CategoryNameBX.FormattingEnabled = true;
-            CategoryNameBX.Location = new Point(27, 96);
-            CategoryNameBX.Name = "CategoryNameBX";
-            CategoryNameBX.Size = new Size(348, 40);
-            CategoryNameBX.TabIndex = 11;
             // 
             // CategoryDel_btn
             // 
@@ -208,11 +208,11 @@
         private Label label3;
         private Panel panel1;
         private ComboBox CategoryTypeBX;
-        private ComboBox CategoryNameBX;
         private Button CategoryDel_btn;
         private Button CategoryUpdate_btn;
         private Button CategoryAdd_btn;
         private Label label2;
         private Label label1;
+        private TextBox CategoryNameBX;
     }
 }

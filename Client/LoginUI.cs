@@ -1,18 +1,68 @@
 
+using Shared.Requests;
+using Shared.Responses;
+
 namespace Client
 {
     public partial class LoginUI : Form
     {
+        Client _client;
+        CancellationTokenSource _cts;
         public LoginUI()
         {
             InitializeComponent();
+            _client = new Client("127.0.0.1", 3333);
+            _cts = new CancellationTokenSource();
+            _client.MessageReceived += OnMessageReceived;
+            _client.UserVerified += OnUserVerified;
+            _ = _client.ConnectAsync();
         }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void OnMessageReceived(object? s, MessageReceivedEventArgs e)
         {
-
+            if (InvokeRequired)
+            {
+                Invoke(() =>
+                {
+                    if (e.IsSuccess == true)
+                        MessageBox.Show(e.Message, "Server notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else
+                        MessageBox.Show(e.Message, "Server notification", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                });
+            }
+            else
+            {
+                if (e.IsSuccess == true)
+                    MessageBox.Show(e.Message, "Server notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else
+                    MessageBox.Show(e.Message, "Server notification", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
-
+        private void OnUserVerified(object? s, UserVerifiedEventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(() =>
+                {
+                    if (e.IsVerified == true)
+                    {
+                        this.Hide();
+                        ClientUI clientUI = new ClientUI(_client);
+                        clientUI.Show();
+                    }
+                    else return;
+                });
+            }
+            else
+            {
+                if (e.IsVerified == true)
+                {
+                    this.Hide();
+                    ClientUI clientUI = new ClientUI(_client);
+                    clientUI.Show();
+                }
+                else return;
+            }
+        }
         private void close_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -22,16 +72,16 @@ namespace Client
         {
             try
             {
-                if (keyData == (Keys.Escape))
-                {
-                    Application.Exit();
-                    return true;
-                }
-                else if (keyData == (Keys.Enter))
-                {
-                    login_btn.PerformClick();
-                    return true;
-                }
+                //if (keyData == (Keys.Escape))
+                //{
+                //    Application.Exit();
+                //    return true;
+                //}
+                //else if (keyData == (Keys.Enter))
+                //{
+                //    login_btn.PerformClick();
+                //    return true;
+                //}
             }
             catch
             {
@@ -50,8 +100,6 @@ namespace Client
             {
                 login_password.UseSystemPasswordChar = true;
             }
-
-
         }
 
         private void login_signupBtn_Click(object sender, EventArgs e)
@@ -62,9 +110,20 @@ namespace Client
                 login_signupBtn.Text = "SIGN IN";
                 login_signinLbl.Text = "REGISTRATION";
                 login_btn.Text = "REGISTER";
+                //show and enable registration form fields
+                login_firstname_BX.Visible = true;
+                login_lastname_BX.Visible = true;
+                login_firstname_lbl.Visible = true;
+                login_lastname_lbl.Visible = true;
+                login_firstname_BX.Enabled = true;
+                login_lastname_BX.Enabled = true;
             }
             else if (login_signupBtn.Text == "SIGN IN")
             {
+                login_firstname_BX.Visible = false;
+                login_lastname_BX.Visible = false;
+                login_firstname_lbl.Visible = false;
+                login_lastname_lbl.Visible = false;
                 login_registerLbl.Text = "REGISTER HERE";
                 login_signupBtn.Text = "SIGN UP";
                 login_signinLbl.Text = "SIGN IN";
@@ -78,44 +137,55 @@ namespace Client
         }
 
 
-        private void login_btn_Click(object sender, EventArgs e)
+        private async void login_btn_Click(object sender, EventArgs e)
         {
             if (login_btn.Text == "REGISTER")
             {
-                //placeholder for registration functionality
-                MessageBox.Show("Registration functionality is not implemented yet.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
+                if (string.IsNullOrEmpty(login_username.Text) 
+                    || string.IsNullOrEmpty(login_password.Text)
+                    || string.IsNullOrEmpty(login_firstname_BX.Text)
+                    || string.IsNullOrEmpty(login_lastname_BX.Text))
+                {
+                    MessageBox.Show("All fields are required.", "Warning!",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                var request = new RegistrationRequest
+                {
+                    FirstName = login_firstname_BX.Text,
+                    LastName = login_lastname_BX.Text,
+                    Login = login_username.Text,
+                    Password = login_password.Text
+                };
+                await _client.SendRequestAsync(request, _cts.Token);
+                login_signupBtn_Click(sender, e);
             }
-            else
+            if (login_btn.Text == "LOGIN")
             {
-
-                if (login_username.Text == "" || login_password.Text == "")
+                if (string.IsNullOrEmpty(login_username.Text) || string.IsNullOrEmpty(login_password.Text))
                 {
-                    MessageBox.Show("Please fill all blank fields", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Login and password must be specified.", "Warning!",
+                                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                //placeholder for login authentication
-                else if (login_username.Text == "admin" && login_password.Text == "password")
-                {
-                    this.Hide();
-                    ClientUI clientUI = new ClientUI();
-                    clientUI.Show();
 
-
-                }
-                //------------
-                else
+                var authRequest = new AuthorizationRequest
                 {
-                    MessageBox.Show("Invalid username or password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                    Login = login_username.Text,
+                    Password = login_password.Text
+                };
+
+                await _client.SendRequestAsync(authRequest, _cts.Token);
             }
         }
 
-        private void LoginUI_Load(object sender, EventArgs e)
+        private async void LoginUI_Load(object sender, EventArgs e)
         {
 
         }
         private void LoginUI_FormClosing(object sender, FormClosingEventArgs e)
         {
+            _client.Dispose();
             Application.Exit();
         }
     }

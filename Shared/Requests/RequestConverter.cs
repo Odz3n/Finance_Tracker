@@ -24,6 +24,8 @@ namespace Shared.Requests
                         return jsonDoc.Deserialize<RegistrationRequest>(options);
                     case (int)RequestType.Auth:
                         return jsonDoc.Deserialize<AuthorizationRequest>(options);
+                    case (int)RequestType.Disconnect:
+                        return jsonDoc.Deserialize<DisconnectRequest>(options);
                     default:
                         throw new JsonException("'Type' doesn't match a known derived type");
                 }

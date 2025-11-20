@@ -13,7 +13,6 @@ namespace Server
         public string? Login { get; set; }
         public TcpClient? Client { get; set; }
         public DateTime? ConnectionTime { get; set; }
-        public DateTime? DisconnectionTime { get; set; }
         public override string ToString()
         {
             return $"{Id} - {Login}";
