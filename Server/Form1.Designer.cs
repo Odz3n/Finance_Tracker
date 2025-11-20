@@ -34,6 +34,7 @@
             btnStart = new Button();
             btnStop = new Button();
             btnDisconnect = new Button();
+            lbLogs = new ListBox();
             SuspendLayout();
             // 
             // tbIp
@@ -74,6 +75,7 @@
             // 
             // btnStop
             // 
+            btnStop.Enabled = false;
             btnStop.Location = new Point(193, 99);
             btnStop.Name = "btnStop";
             btnStop.Size = new Size(75, 23);
@@ -83,6 +85,7 @@
             // 
             // btnDisconnect
             // 
+            btnDisconnect.Enabled = false;
             btnDisconnect.Location = new Point(193, 128);
             btnDisconnect.Name = "btnDisconnect";
             btnDisconnect.Size = new Size(75, 23);
@@ -90,11 +93,20 @@
             btnDisconnect.Text = "Disconnect";
             btnDisconnect.UseVisualStyleBackColor = true;
             // 
+            // lbLogs
+            // 
+            lbLogs.FormattingEnabled = true;
+            lbLogs.Location = new Point(12, 157);
+            lbLogs.Name = "lbLogs";
+            lbLogs.Size = new Size(254, 109);
+            lbLogs.TabIndex = 6;
+            // 
             // Form_Login
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(278, 163);
+            ClientSize = new Size(278, 278);
+            Controls.Add(lbLogs);
             Controls.Add(btnDisconnect);
             Controls.Add(btnStop);
             Controls.Add(btnStart);
@@ -115,5 +127,6 @@
         private Button btnStart;
         private Button btnStop;
         private Button btnDisconnect;
+        private ListBox lbLogs;
     }
 }
