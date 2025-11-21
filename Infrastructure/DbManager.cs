@@ -9,13 +9,15 @@ using System.Threading.Tasks;
 
 namespace Infrastructure
 {
-    public class DbManager: IDisposable
+    public class DbManager : IDisposable
     {
         readonly FinanceTrackerDbContext? _context;
+
         public DbManager(FinanceTrackerDbContext context)
         {
             _context = context;
         }
+
         public async Task<DbOperationResult> AddUserAsync(string login, string firstName, string lastName, string passHash, string passSalt)
         {
             try
@@ -44,6 +46,7 @@ namespace Infrastructure
                 return new DbOperationResult { IsSuccess = false, Message = $"Exception occurd '{ex.Message}'" };
             }
         }
+
         public async Task<User?> GetUserByLoginAsync(string login)
         {
             try
@@ -57,6 +60,7 @@ namespace Infrastructure
                 return null;
             }
         }
+
         public async Task<User?> VerifyUser(string login, string pass)
         {
             try
@@ -77,6 +81,29 @@ namespace Infrastructure
                 return null;
             }
         }
+
+        public async Task AddLogAsync(string message)
+        {
+            try
+            {
+                if (_context == null)
+                    throw new ArgumentNullException(nameof(_context));
+
+                var log = new LogEntry
+                {
+                    Event = message,
+                    CreatedAt = DateTime.Now
+                };
+
+                await _context.LogEntries.AddAsync(log);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"AddLogAsync: {ex.Message}");
+            }
+        }
+
         public void Dispose()
         {
             _context?.Dispose();
