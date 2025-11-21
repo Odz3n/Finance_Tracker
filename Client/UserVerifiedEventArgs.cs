@@ -9,5 +9,7 @@ namespace Client
     public class UserVerifiedEventArgs: EventArgs
     {
         public bool? IsVerified { get; set; }
+        public int? UserId { get; set; }
+        public string? UserLogin { get; set; }
     }
 }

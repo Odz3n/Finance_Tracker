@@ -15,11 +15,12 @@ namespace Client
     {
         Client _client;
         CancellationTokenSource _cts;
-        public ClientUI(Client client)
+        public ClientUI(Client client, string? userName)
         {
             InitializeComponent();
             _client = client;
             _cts = new CancellationTokenSource();
+            lblUserLogin.Text = userName;
         }
 
         private void ClientUI_Load(object sender, EventArgs e)

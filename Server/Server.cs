@@ -177,6 +177,9 @@ namespace Server
 
                     response.IsSuccess = true;
                     response.Message = "Successfully logined.";
+                    response.UserId = result.Id;
+                    response.UserLogin = result.Login;
+
                     await RespondToSenderAsync(sender, response, token);
                     _ = HandleConnectedUserAsync(user, token);
 

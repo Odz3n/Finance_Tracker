@@ -88,7 +88,12 @@ namespace Client
                 MessageReceived.Invoke(this,
                     new MessageReceivedEventArgs { IsSuccess = response.IsSuccess, Message = response.Message });
                 UserVerified.Invoke(this,
-                    new UserVerifiedEventArgs { IsVerified = response.IsSuccess });
+                    new UserVerifiedEventArgs
+                    {
+                        IsVerified = response.IsSuccess,
+                        UserId = response.UserId,
+                        UserLogin = response.UserLogin
+                    });
             }
             catch (Exception ex)
             {

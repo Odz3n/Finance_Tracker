@@ -46,7 +46,7 @@ namespace Client
                     if (e.IsVerified == true)
                     {
                         this.Hide();
-                        ClientUI clientUI = new ClientUI(_client);
+                        ClientUI clientUI = new ClientUI(_client, e.UserLogin);
                         clientUI.Show();
                     }
                     else return;
@@ -57,7 +57,7 @@ namespace Client
                 if (e.IsVerified == true)
                 {
                     this.Hide();
-                    ClientUI clientUI = new ClientUI(_client);
+                    ClientUI clientUI = new ClientUI(_client, e.UserLogin);
                     clientUI.Show();
                 }
                 else return;
@@ -72,16 +72,16 @@ namespace Client
         {
             try
             {
-                //if (keyData == (Keys.Escape))
-                //{
-                //    Application.Exit();
-                //    return true;
-                //}
-                //else if (keyData == (Keys.Enter))
-                //{
-                //    login_btn.PerformClick();
-                //    return true;
-                //}
+                if (keyData == (Keys.Escape))
+                {
+                    Application.Exit();
+                    return true;
+                }
+                else if (keyData == (Keys.Enter))
+                {
+                    login_btn.PerformClick();
+                    return true;
+                }
             }
             catch
             {

@@ -35,7 +35,7 @@
             ClientCategory_btn = new Button();
             ClientWallet_btn = new Button();
             ClientDashboard_btn = new Button();
-            label2 = new Label();
+            lblUserLogin = new Label();
             label1 = new Label();
             pictureBox1 = new PictureBox();
             ClientPanel_pnl = new Panel();
@@ -51,7 +51,7 @@
             ClientUserPanel_pnl.Controls.Add(ClientCategory_btn);
             ClientUserPanel_pnl.Controls.Add(ClientWallet_btn);
             ClientUserPanel_pnl.Controls.Add(ClientDashboard_btn);
-            ClientUserPanel_pnl.Controls.Add(label2);
+            ClientUserPanel_pnl.Controls.Add(lblUserLogin);
             ClientUserPanel_pnl.Controls.Add(label1);
             ClientUserPanel_pnl.Controls.Add(pictureBox1);
             ClientUserPanel_pnl.Dock = DockStyle.Left;
@@ -158,16 +158,15 @@
             ClientDashboard_btn.UseVisualStyleBackColor = false;
             ClientDashboard_btn.Click += ClientDashboard_btn_Click;
             // 
-            // label2
+            // lblUserLogin
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Tahoma", 10.125F);
-            label2.ForeColor = Color.White;
-            label2.Location = new Point(202, 284);
-            label2.Name = "label2";
-            label2.Size = new Size(90, 33);
-            label2.TabIndex = 2;
-            label2.Text = "Admin";
+            lblUserLogin.AutoSize = true;
+            lblUserLogin.Font = new Font("Tahoma", 10.125F);
+            lblUserLogin.ForeColor = Color.White;
+            lblUserLogin.Location = new Point(202, 284);
+            lblUserLogin.Name = "lblUserLogin";
+            lblUserLogin.Size = new Size(0, 17);
+            lblUserLogin.TabIndex = 2;
             // 
             // label1
             // 
@@ -176,7 +175,7 @@
             label1.ForeColor = Color.White;
             label1.Location = new Point(76, 284);
             label1.Name = "label1";
-            label1.Size = new Size(131, 33);
+            label1.Size = new Size(69, 17);
             label1.TabIndex = 1;
             label1.Text = "Welcome,";
             // 
@@ -225,7 +224,7 @@
         private PictureBox pictureBox1;
         private Label label1;
         private Button ClientDashboard_btn;
-        private Label label2;
+        private Label lblUserLogin;
         private Button ClientCategory_btn;
         private Button ClientWallet_btn;
         private Button ClientTransaction_btn;
