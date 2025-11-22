@@ -87,9 +87,19 @@ namespace Server
             btnDisconnect.Enabled = !btnDisconnect.Enabled;
         }
 
-        private void btnStop_Click(object sender, EventArgs e)
+        private async void btnStop_Click(object sender, EventArgs e)
         {
+            await _server.StopAsync();
+            FlipFlags();
+        }
 
+        private async void btnDisconnect_Click(object sender, EventArgs e)
+        {
+            var user = (lbActiveUsers.SelectedItem as ConnectedUser);
+            if (user == null)
+                return;
+
+            await _server.DisconnectUserAsync(user);
         }
     }
 }

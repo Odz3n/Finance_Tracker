@@ -24,6 +24,24 @@ namespace Shared.Responses
                         return jsonDoc.Deserialize<RegistrationResponse>(options);
                     case (int)ResponseType.Auth:
                         return jsonDoc.Deserialize<AuthorizationResponse>(options);
+                    case (int)ResponseType.GetWallets:
+                        return jsonDoc.Deserialize<GetWalletsResponse>(options);
+                    case (int)ResponseType.GetCurrencies:
+                        return jsonDoc.Deserialize<GetCurrenciesResponse>(options);
+                    case (int)ResponseType.AddWallet:
+                        return jsonDoc.Deserialize<AddWalletResponse>(options);
+                    case (int)ResponseType.DeleteWallet:
+                        return jsonDoc.Deserialize<DeleteWalletResponse>(options);
+                    case (int)ResponseType.GetCategories:
+                        return jsonDoc.Deserialize<GetCategoriesResponse>(options);
+                    case (int)ResponseType.GetTransactionTypes:
+                        return jsonDoc.Deserialize<GetTransactionTypesResponse>(options);
+                    case (int)ResponseType.AddCategory:
+                        return jsonDoc.Deserialize<AddCategoryResponse>(options);
+                    case (int)ResponseType.DeleteCategory:
+                        return jsonDoc.Deserialize<DeleteCategoryResponse>(options);
+                    case (int)ResponseType.Disconnect:
+                        return jsonDoc.Deserialize<DisconnectUserResponse>(options);
                     default:
                         throw new JsonException("'Type' doesn't match a known derived type");
                 }

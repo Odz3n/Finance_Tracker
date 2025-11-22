@@ -13,9 +13,30 @@ namespace Client
             InitializeComponent();
             _client = new Client("127.0.0.1", 3333);
             _cts = new CancellationTokenSource();
+            _client.DisconnectMessageReceived += OnDisconnectMessageReceived;
             _client.MessageReceived += OnMessageReceived;
             _client.UserVerified += OnUserVerified;
             _ = _client.ConnectAsync();
+        }
+        private void OnDisconnectMessageReceived(object? s, DisconnectMessageReceivedEventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(() =>
+                {
+                    MessageBox.Show(e.Message, "Server notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    _cts.Cancel();
+                    _cts.Dispose();
+                    _client.Dispose();
+                });
+            }
+            else
+            {
+                MessageBox.Show(e.Message, "Server notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _cts.Cancel();
+                _cts.Dispose();
+                _client.Dispose();
+            }
         }
         private void OnMessageReceived(object? s, MessageReceivedEventArgs e)
         {
@@ -45,8 +66,15 @@ namespace Client
                 {
                     if (e.IsVerified == true)
                     {
+                        var userInfo = new ClientUserInfo
+                        {
+                            Id = e.UserId,
+                            Login = e.UserLogin,
+                            ConnectionTime = e.UserConnectionTime
+                        };
+
                         this.Hide();
-                        ClientUI clientUI = new ClientUI(_client, e.UserLogin);
+                        ClientUI clientUI = new ClientUI(_client, userInfo);
                         clientUI.Show();
                     }
                     else return;
@@ -56,8 +84,14 @@ namespace Client
             {
                 if (e.IsVerified == true)
                 {
+                    var userInfo = new ClientUserInfo
+                    {
+                        Id = e.UserId,
+                        Login = e.UserLogin,
+                        ConnectionTime = e.UserConnectionTime
+                    };
                     this.Hide();
-                    ClientUI clientUI = new ClientUI(_client, e.UserLogin);
+                    ClientUI clientUI = new ClientUI(_client, userInfo);
                     clientUI.Show();
                 }
                 else return;

@@ -14,13 +14,16 @@ namespace Client
     public partial class ClientUI : Form
     {
         Client _client;
+        ClientUserInfo _userInfo;
         CancellationTokenSource _cts;
-        public ClientUI(Client client, string? userName)
+        public ClientUI(Client client, ClientUserInfo? userInfo)
         {
             InitializeComponent();
             _client = client;
+            _userInfo = userInfo;
             _cts = new CancellationTokenSource();
-            lblUserLogin.Text = userName;
+
+            lblUserLogin.Text = _userInfo?.Login;
         }
 
         private void ClientUI_Load(object sender, EventArgs e)
@@ -48,11 +51,11 @@ namespace Client
             login.Show();
         }
 
-        private void ClientWallet_btn_Click(object sender, EventArgs e)
+        private async void ClientWallet_btn_Click(object sender, EventArgs e)
         {
             //clear panel
             ClientPanel_pnl.Controls.Clear();
-            WalletUI wallet = new WalletUI();
+            WalletUI wallet = new WalletUI(_client, _userInfo);
             ClientPanel_pnl.Controls.Add(wallet);
             wallet.Show();
             wallet.Dock = DockStyle.Fill;
@@ -79,7 +82,7 @@ namespace Client
         {
             //clear panel
             ClientPanel_pnl.Controls.Clear();
-            CategoryUI category = new CategoryUI();
+            CategoryUI category = new CategoryUI(_client, _userInfo);
             ClientPanel_pnl.Controls.Add(category);
             category.Show();
             category.Dock = DockStyle.Fill;
@@ -99,7 +102,6 @@ namespace Client
 
         private void ClientUI_FormClosing(object sender, FormClosingEventArgs e)
         {
-
             Application.Exit();
         }
     }

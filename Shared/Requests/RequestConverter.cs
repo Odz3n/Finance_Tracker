@@ -26,6 +26,22 @@ namespace Shared.Requests
                         return jsonDoc.Deserialize<AuthorizationRequest>(options);
                     case (int)RequestType.Disconnect:
                         return jsonDoc.Deserialize<DisconnectRequest>(options);
+                    case (int)RequestType.GetWallets:
+                        return jsonDoc.Deserialize<GetWalletsRequest>(options);
+                    case (int)RequestType.AddWallet:
+                        return jsonDoc.Deserialize<AddWalletRequest>(options);
+                    case (int)RequestType.GetCurrencies:
+                        return jsonDoc.Deserialize<GetCurrenciesRequest>(options);
+                    case (int)RequestType.DeleteWallet:
+                        return jsonDoc.Deserialize<DeleteWalletRequest>(options);
+                    case (int)RequestType.GetCategories:
+                        return jsonDoc.Deserialize<GetCategoriesRequest>(options);
+                    case (int)RequestType.GetTransactionTypes:
+                        return jsonDoc.Deserialize<GetTransactionTypesRequest>(options);
+                    case (int)RequestType.AddCategory:
+                        return jsonDoc.Deserialize<AddCategoryRequest>(options);
+                    case (int)RequestType.DeleteCategory:
+                        return jsonDoc.Deserialize<DeleteCategoryRequest>(options);
                     default:
                         throw new JsonException("'Type' doesn't match a known derived type");
                 }

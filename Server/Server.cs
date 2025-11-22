@@ -236,9 +236,89 @@ namespace Server
                             new UserDisconnectedEventArgs { User = user });
                         break;
                     }
-                    if (baseRequest?.Type == RequestType.Add)
+                    if (baseRequest?.Type == RequestType.GetWallets)
                     {
-                        //var concreteRequest = JsonSerializer.Deserialize<>(json);
+                        var concreteRequest = JsonSerializer.Deserialize<GetWalletsRequest>(json);
+                        var wallets = await _db.GetWalletsAsync(concreteRequest.UserId);
+                        var response = new GetWalletsResponse { Wallets = wallets };
+                        await RespondToSenderAsync(user.Client, response, token);
+                    }
+                    if (baseRequest?.Type == RequestType.GetCurrencies)
+                    {
+                        var concreteRequest = JsonSerializer.Deserialize<GetCurrenciesRequest>(json);
+                        var currencies = await _db.GetCurrenciesAsync();
+                        var response = new GetCurrenciesResponse { Currencies = currencies };
+                        await RespondToSenderAsync(user.Client, response, token);
+                    }
+                    if (baseRequest?.Type == RequestType.AddWallet)
+                    {
+                        var concreteRequest = JsonSerializer.Deserialize<AddWalletRequest>(json);
+
+                        var name = concreteRequest.Name;
+                        var balance = concreteRequest.Balance;
+                        var userId = concreteRequest.UserId;
+                        var currencyId = concreteRequest.CurrencyId;
+
+                        var res = await _db.AddWalletAsync(name, balance, userId, currencyId);
+
+                        var response = new AddWalletResponse { IsSuccess = res.IsSuccess, Message = res.Message };
+
+                        await RespondToSenderAsync(user.Client, response, token);
+                    }
+                    if (baseRequest?.Type == RequestType.DeleteWallet)
+                    {
+                        var concreteRequest = JsonSerializer.Deserialize<DeleteWalletRequest>(json);
+
+                        var userId = concreteRequest.UserId;
+                        var walletName = concreteRequest.WalletName;
+
+                        var res = await _db.DeleteWalletAsync(userId, walletName);
+
+                        var response = new DeleteWalletResponse { IsSuccess = res.IsSuccess, Message = res.Message };
+
+                        await RespondToSenderAsync(user.Client, response, token);
+                    }
+                    if (baseRequest?.Type == RequestType.GetTransactionTypes)
+                    {
+                        var concreteRequest = JsonSerializer.Deserialize<GetTransactionTypesRequest>(json);
+                        var res = await _db.GetTransactionTypesAsync();
+
+                        var response = new GetTransactionTypesResponse { TransactionTypes = res };
+
+                        await RespondToSenderAsync(user.Client, response, token);
+                    }
+                    if (baseRequest?.Type == RequestType.GetCategories)
+                    {
+                        var concreteRequest = JsonSerializer.Deserialize<GetCategoriesRequest>(json);
+                        var res = await _db.GetCategoriesAsync();
+
+                        var response = new GetCategoriesResponse { Categories = res };
+
+                        await RespondToSenderAsync(user.Client, response, token);
+                    }
+                    if (baseRequest?.Type == RequestType.AddCategory)
+                    {
+                        var concreteRequest = JsonSerializer.Deserialize<AddCategoryRequest>(json);
+
+                        var name = concreteRequest.Name;
+                        var transactionTypeId = concreteRequest.TransactionTypeId;
+
+                        var res = await _db.AddCategoryAsync(name, transactionTypeId);
+
+                        var response = new AddCategoryResponse { IsSuccess = res.IsSuccess, Message = res.Message };
+                        await RespondToSenderAsync(user.Client, response, token);
+                    }
+                    if (baseRequest?.Type == RequestType.DeleteCategory)
+                    {
+                        var concreteRequest = JsonSerializer.Deserialize<DeleteCategoryRequest>(json);
+
+                        var name = concreteRequest.Name;
+                        var transactionTypeId = concreteRequest.TransactionTypeId;
+
+                        var res = await _db.DeleteCategoryAsync(name, transactionTypeId);
+
+                        var response = new DeleteCategoryResponse { IsSuccess = res.IsSuccess, Message = res.Message };
+                        await RespondToSenderAsync(user.Client, response, token);
                     }
                 }
             }
@@ -251,17 +331,39 @@ namespace Server
         {
             Console.WriteLine("In RespondToSenderAsync");
             var json = JsonSerializer.Serialize(response);
+            Console.WriteLine($"Json to send: {json}");
             var data = Encoding.UTF8.GetBytes(json);
             await sender.GetStream().WriteAsync(data, 0, data.Length, token);
         }
-        public async Task StopAsync()
+        public async Task DisconnectUserAsync(ConnectedUser user)
         {
-            _cts.Cancel();
-            _server.Stop();
-            foreach (var user in _connectedUsers)
+            try
             {
+                lock (connectedUsersLockObject)
+                {
+                    _connectedUsers.Remove(user);
+                }
+                UserDisconnected.Invoke(this,
+                    new UserDisconnectedEventArgs { User = user });
+                var response = new DisconnectUserResponse { Message = "Server closed connection." };
+                await RespondToSenderAsync(user.Client, response, _cts.Token);
                 user.Client.Close();
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"DisconnectUserAsync: {ex.Message}");
+            }
+        }
+        public async Task StopAsync()
+        {
+            var tasks = new List<Task>();
+            foreach (var user in _connectedUsers.ToList())
+            {
+                tasks.Add(DisconnectUserAsync(user));
+            }
+            await Task.WhenAll(tasks);
+            _cts.Cancel();
+            _server.Stop();
         }
     }
 }

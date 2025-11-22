@@ -12,10 +12,21 @@ namespace Shared.Responses
     {
         Reg,
         Auth,
-        Get,
-        Add,
-        Delete,
-        Update
+        Disconnect,
+        GetWallets,
+        GetCategories,
+        GetTransactions,
+        GetTransactionTypes,
+        GetCurrencies,
+        AddWallet,
+        AddCategory,
+        AddTransaction,
+        DeleteWallet,
+        DeleteCategory,
+        DeleteTransaction,
+        UpdateWallet,
+        UpdateCategory,
+        UpdateTransaction
     }
     [JsonConverter(typeof(ResponseConverter))]
     public abstract class Response

@@ -20,7 +20,12 @@ namespace Client
         private bool _isDisposed;
 
         public event EventHandler<MessageReceivedEventArgs> MessageReceived;
+        public event EventHandler<DisconnectMessageReceivedEventArgs> DisconnectMessageReceived;
         public event EventHandler<UserVerifiedEventArgs> UserVerified;
+        public event EventHandler<WalletsReceivedEventArgs> WalletsReceived;
+        public event EventHandler<CurrenciesReceivedEventArgs> CurrenciesReceived;
+        public event EventHandler<CategoriesReceivedEventArgs> CategoriesReceived;
+        public event EventHandler<TransactionTypesReceivedEventArgs> TransactionTypesReceived;
 
         const int BUFFER_SIZE = 2048;
 
@@ -74,6 +79,51 @@ namespace Client
                         var concreteResponse = JsonSerializer.Deserialize<AuthorizationResponse>(json);
                         _ = HandleAuthorizationResponseAsync(concreteResponse, token);
                     }
+                    if (baseResponse?.Type == ResponseType.AddWallet)
+                    {
+                        var concreteResponse = JsonSerializer.Deserialize<AddWalletResponse>(json);
+                        _ = HandleAddWalletsResponseAsync(concreteResponse, token);
+                    }
+                    if (baseResponse?.Type == ResponseType.GetWallets)
+                    {
+                        var concreteResponse = JsonSerializer.Deserialize<GetWalletsResponse>(json);
+                        _ = HandleGetWalletsResponseAsync(concreteResponse, token);
+                    }
+                    if (baseResponse?.Type == ResponseType.DeleteWallet)
+                    {
+                        var concreteResponse = JsonSerializer.Deserialize<DeleteWalletResponse>(json);
+                        _ = HandleDeleteWalletResponseAsync(concreteResponse, token);
+                    }
+                    if (baseResponse?.Type == ResponseType.GetCurrencies)
+                    {
+                        var concreteResponse = JsonSerializer.Deserialize<GetCurrenciesResponse>(json);
+                        _ = HandleGetCurrenciesResponseAsync(concreteResponse, token);
+                    }
+                    if (baseResponse?.Type == ResponseType.GetCategories)
+                    {
+                        var concreteResponse = JsonSerializer.Deserialize<GetCategoriesResponse>(json);
+                        _ = HandleGetCategoriesResponseAsync(concreteResponse, token);
+                    }
+                    if (baseResponse?.Type == ResponseType.AddCategory)
+                    {
+                        var concreteResponse = JsonSerializer.Deserialize<AddCategoryResponse>(json);
+                        _ = HandleAddCategoryResponseAsync(concreteResponse, token);
+                    }
+                    if (baseResponse?.Type == ResponseType.GetTransactionTypes)
+                    {
+                        var concreteResponse = JsonSerializer.Deserialize<GetTransactionTypesResponse>(json);
+                        _ = HandleGetTransactionTypesResponseAsync(concreteResponse, token);
+                    }
+                    if (baseResponse?.Type == ResponseType.DeleteCategory)
+                    {
+                        var concreteResponse = JsonSerializer.Deserialize<DeleteCategoryResponse>(json);
+                        _ = HandleDeleteCategoryResponseAsync(concreteResponse, token);
+                    }
+                    if (baseResponse?.Type == ResponseType.Disconnect)
+                    {
+                        var concreteResponse = JsonSerializer.Deserialize<DisconnectUserResponse>(json);
+                        _ = HandleDisconnectResponseAcync(concreteResponse, token);
+                    }
                 }
             }
             catch (Exception ex)
@@ -92,7 +142,8 @@ namespace Client
                     {
                         IsVerified = response.IsSuccess,
                         UserId = response.UserId,
-                        UserLogin = response.UserLogin
+                        UserLogin = response.UserLogin,
+                        UserConnectionTime = response.UserConnectionTime
                     });
             }
             catch (Exception ex)
@@ -110,6 +161,115 @@ namespace Client
             catch (Exception ex)
             {
                 Console.WriteLine($"HandleRegistrationResponseAsync: {ex.Message}");
+            }
+        }
+        private async Task HandleGetWalletsResponseAsync(GetWalletsResponse response, CancellationToken token)
+        {
+            try
+            {
+                Console.WriteLine(response.Wallets.Count);
+                WalletsReceived.Invoke(this,
+                    new WalletsReceivedEventArgs { Wallets = response.Wallets });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"HandleGetWalletsResponse: {ex.Message}");
+            }
+        }
+        private async Task HandleDeleteWalletResponseAsync(DeleteWalletResponse response, CancellationToken token)
+        {
+            try
+            {
+                MessageReceived.Invoke(this,
+                    new MessageReceivedEventArgs { IsSuccess = response.IsSuccess, Message = response.Message });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"HandleDeleteWalletResponseAsync: {ex.Message}");
+            }
+        }
+        private async Task HandleGetCurrenciesResponseAsync(GetCurrenciesResponse response, CancellationToken token)
+        {
+            try
+            {
+                CurrenciesReceived.Invoke(this,
+                    new CurrenciesReceivedEventArgs { Currencies = response.Currencies });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"HandleGetCurrenciesResponse: {ex.Message}");
+            }
+        }
+        private async Task HandleGetCategoriesResponseAsync(GetCategoriesResponse response, CancellationToken token)
+        {
+            try
+            {
+                CategoriesReceived.Invoke(this,
+                    new CategoriesReceivedEventArgs { Categories = response.Categories });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"HandleGetCategoriesResponseAsync: {ex.Message}");
+            }
+        }
+        private async Task HandleGetTransactionTypesResponseAsync(GetTransactionTypesResponse response, CancellationToken token)
+        {
+            try
+            {
+                TransactionTypesReceived.Invoke(this,
+                    new TransactionTypesReceivedEventArgs { TransactionTypes = response.TransactionTypes });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"HandleGetTransactionTypesResponseAsync: {ex.Message}");
+            }
+        }
+        private async Task HandleAddWalletsResponseAsync(AddWalletResponse response, CancellationToken token)
+        {
+            try
+            {
+                MessageReceived.Invoke(this,
+                    new MessageReceivedEventArgs { IsSuccess = response.IsSuccess, Message = response.Message });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"HandleAddWalletsResponseAsync: {ex.Message}");
+            }
+        }
+        private async Task HandleAddCategoryResponseAsync(AddCategoryResponse response, CancellationToken token)
+        {
+            try
+            {
+                MessageReceived.Invoke(this,
+                    new MessageReceivedEventArgs { IsSuccess = response.IsSuccess, Message = response.Message });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"HandleAddCategoryResponseAsync: {ex.Message}");
+            }
+        }
+        private async Task HandleDeleteCategoryResponseAsync(DeleteCategoryResponse response, CancellationToken token)
+        {
+            try
+            {
+                MessageReceived.Invoke(this,
+                    new MessageReceivedEventArgs { IsSuccess = response.IsSuccess, Message = response.Message });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"HandleDeleteCategoryResponseAsync: {ex.Message}");
+            }
+        }
+        private async Task HandleDisconnectResponseAcync(DisconnectUserResponse response, CancellationToken token)
+        {
+            try
+            {
+                DisconnectMessageReceived.Invoke(this,
+                    new DisconnectMessageReceivedEventArgs { Message = response.Message });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"HandleDisconnectResponseAcync: {ex.Message}");
             }
         }
         public async Task SendRequestAsync(Request request, CancellationToken token)

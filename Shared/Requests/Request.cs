@@ -13,10 +13,20 @@ namespace Shared.Requests
         Reg,
         Auth,
         Disconnect,
-        Get,
-        Add,
-        Delete,
-        Update
+        GetWallets,
+        GetCategories,
+        GetTransactions,
+        GetTransactionTypes,
+        GetCurrencies,
+        AddWallet,
+        AddCategory,
+        AddTransaction,
+        DeleteWallet,
+        DeleteCategory,
+        DeleteTransaction,
+        UpdateWallet,
+        UpdateCategory,
+        UpdateTransaction
     }
     [JsonConverter(typeof(RequestConverter))]
     public abstract class Request

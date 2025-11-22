@@ -12,7 +12,8 @@ namespace Shared.Responses
         public override ResponseType? Type => ResponseType.Auth;
         public bool IsSuccess { get; set; }
         public string? Message { get; set; }
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
         public string? UserLogin { get; set; }
+        public DateTime? UserConnectionTime { get; set; }
     }
 }

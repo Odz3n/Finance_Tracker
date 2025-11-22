@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             panel2 = new Panel();
             CategoryDataList = new DataGridView();
             label3 = new Label();
@@ -50,36 +50,39 @@
             panel2.BackColor = Color.White;
             panel2.Controls.Add(CategoryDataList);
             panel2.Controls.Add(label3);
-            panel2.Location = new Point(465, 29);
+            panel2.Location = new Point(250, 14);
+            panel2.Margin = new Padding(2, 1, 2, 1);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1000, 950);
+            panel2.Size = new Size(538, 445);
             panel2.TabIndex = 3;
             // 
             // CategoryDataList
             // 
             CategoryDataList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(0, 25, 50);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            CategoryDataList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(0, 25, 50);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            CategoryDataList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             CategoryDataList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            CategoryDataList.Location = new Point(29, 96);
+            CategoryDataList.Location = new Point(16, 45);
+            CategoryDataList.Margin = new Padding(2, 1, 2, 1);
             CategoryDataList.Name = "CategoryDataList";
             CategoryDataList.RowHeadersWidth = 82;
-            CategoryDataList.Size = new Size(945, 820);
+            CategoryDataList.Size = new Size(509, 384);
             CategoryDataList.TabIndex = 4;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Tahoma", 13.875F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            label3.Location = new Point(29, 33);
+            label3.Location = new Point(16, 15);
+            label3.Margin = new Padding(2, 0, 2, 0);
             label3.Name = "label3";
-            label3.Size = new Size(230, 45);
+            label3.Size = new Size(117, 23);
             label3.TabIndex = 3;
             label3.Text = "Category List";
             // 
@@ -93,25 +96,28 @@
             panel1.Controls.Add(CategoryAdd_btn);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(label1);
-            panel1.Location = new Point(30, 29);
+            panel1.Location = new Point(16, 14);
+            panel1.Margin = new Padding(2, 1, 2, 1);
             panel1.Name = "panel1";
-            panel1.Size = new Size(400, 950);
+            panel1.Size = new Size(215, 445);
             panel1.TabIndex = 2;
             // 
             // CategoryNameBX
             // 
             CategoryNameBX.BorderStyle = BorderStyle.FixedSingle;
-            CategoryNameBX.Location = new Point(21, 97);
+            CategoryNameBX.Location = new Point(11, 45);
+            CategoryNameBX.Margin = new Padding(2, 1, 2, 1);
             CategoryNameBX.Name = "CategoryNameBX";
-            CategoryNameBX.Size = new Size(354, 39);
+            CategoryNameBX.Size = new Size(192, 23);
             CategoryNameBX.TabIndex = 13;
             // 
             // CategoryTypeBX
             // 
             CategoryTypeBX.FormattingEnabled = true;
-            CategoryTypeBX.Location = new Point(21, 235);
+            CategoryTypeBX.Location = new Point(11, 110);
+            CategoryTypeBX.Margin = new Padding(2, 1, 2, 1);
             CategoryTypeBX.Name = "CategoryTypeBX";
-            CategoryTypeBX.Size = new Size(354, 40);
+            CategoryTypeBX.Size = new Size(192, 23);
             CategoryTypeBX.TabIndex = 12;
             // 
             // CategoryDel_btn
@@ -124,12 +130,14 @@
             CategoryDel_btn.FlatStyle = FlatStyle.Flat;
             CategoryDel_btn.Font = new Font("Tahoma", 13.875F, FontStyle.Regular, GraphicsUnit.Point, 204);
             CategoryDel_btn.ForeColor = Color.White;
-            CategoryDel_btn.Location = new Point(205, 328);
+            CategoryDel_btn.Location = new Point(110, 154);
+            CategoryDel_btn.Margin = new Padding(2, 1, 2, 1);
             CategoryDel_btn.Name = "CategoryDel_btn";
-            CategoryDel_btn.Size = new Size(170, 60);
+            CategoryDel_btn.Size = new Size(92, 28);
             CategoryDel_btn.TabIndex = 10;
             CategoryDel_btn.Text = "Delete";
             CategoryDel_btn.UseVisualStyleBackColor = false;
+            CategoryDel_btn.Click += CategoryDel_btn_Click;
             // 
             // CategoryUpdate_btn
             // 
@@ -141,12 +149,14 @@
             CategoryUpdate_btn.FlatStyle = FlatStyle.Flat;
             CategoryUpdate_btn.Font = new Font("Tahoma", 13.875F, FontStyle.Regular, GraphicsUnit.Point, 204);
             CategoryUpdate_btn.ForeColor = Color.White;
-            CategoryUpdate_btn.Location = new Point(21, 422);
+            CategoryUpdate_btn.Location = new Point(11, 198);
+            CategoryUpdate_btn.Margin = new Padding(2, 1, 2, 1);
             CategoryUpdate_btn.Name = "CategoryUpdate_btn";
-            CategoryUpdate_btn.Size = new Size(354, 60);
+            CategoryUpdate_btn.Size = new Size(191, 28);
             CategoryUpdate_btn.TabIndex = 9;
             CategoryUpdate_btn.Text = "Update";
             CategoryUpdate_btn.UseVisualStyleBackColor = false;
+            CategoryUpdate_btn.Click += CategoryUpdate_btn_Click;
             // 
             // CategoryAdd_btn
             // 
@@ -158,20 +168,23 @@
             CategoryAdd_btn.FlatStyle = FlatStyle.Flat;
             CategoryAdd_btn.Font = new Font("Tahoma", 13.875F, FontStyle.Regular, GraphicsUnit.Point, 204);
             CategoryAdd_btn.ForeColor = Color.White;
-            CategoryAdd_btn.Location = new Point(21, 328);
+            CategoryAdd_btn.Location = new Point(11, 154);
+            CategoryAdd_btn.Margin = new Padding(2, 1, 2, 1);
             CategoryAdd_btn.Name = "CategoryAdd_btn";
-            CategoryAdd_btn.Size = new Size(170, 60);
+            CategoryAdd_btn.Size = new Size(92, 28);
             CategoryAdd_btn.TabIndex = 8;
             CategoryAdd_btn.Text = "Add";
             CategoryAdd_btn.UseVisualStyleBackColor = false;
+            CategoryAdd_btn.Click += CategoryAdd_btn_Click;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Tahoma", 13.875F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            label2.Location = new Point(27, 172);
+            label2.Location = new Point(15, 81);
+            label2.Margin = new Padding(2, 0, 2, 0);
             label2.Name = "label2";
-            label2.Size = new Size(99, 45);
+            label2.Size = new Size(51, 23);
             label2.TabIndex = 4;
             label2.Text = "Type";
             // 
@@ -179,20 +192,22 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Tahoma", 13.875F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            label1.Location = new Point(27, 33);
+            label1.Location = new Point(15, 15);
+            label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new Size(163, 45);
+            label1.Size = new Size(84, 23);
             label1.TabIndex = 2;
             label1.Text = "Category";
             // 
             // CategoryUI
             // 
-            AutoScaleDimensions = new SizeF(13F, 32F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel2);
             Controls.Add(panel1);
+            Margin = new Padding(2, 1, 2, 1);
             Name = "CategoryUI";
-            Size = new Size(1494, 1009);
+            Size = new Size(804, 473);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)CategoryDataList).EndInit();
