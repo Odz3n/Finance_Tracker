@@ -93,6 +93,7 @@
             btnDisconnect.TabIndex = 5;
             btnDisconnect.Text = "Disconnect";
             btnDisconnect.UseVisualStyleBackColor = true;
+            btnDisconnect.Click += btnDisconnect_Click;
             // 
             // lbLogs
             // 

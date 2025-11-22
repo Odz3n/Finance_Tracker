@@ -82,17 +82,36 @@ namespace Server
             try
             {
                 var clientStream = client.GetStream();
-                var streamBuffer = new byte[BUFFER_SIZE];
+                var lenBytes = new byte[4];
                 while (!token.IsCancellationRequested)
                 {
-                    var bufferSize = await clientStream.ReadAsync(streamBuffer, 0, streamBuffer.Length);
-
-                    if (bufferSize <= 0)
+                    int read = 0;
+                    while (read < 4)
                     {
+                        int n = await clientStream.ReadAsync(lenBytes, read, 4 - read, token);
+                        if (n == 0)
+                            throw new IOException("Client disconnected while reading message length");
+                        read += n;
+                    }
+
+                    int messageLength = BitConverter.ToInt32(lenBytes, 0);
+                    if (messageLength <= 0)
+                    {
+                        Console.WriteLine($"Invalid message length: {messageLength}");
                         break;
                     }
 
-                    var json = Encoding.UTF8.GetString(streamBuffer, 0, bufferSize);
+                    byte[] messageBytes = new byte[messageLength];
+                    int totalRead = 0;
+                    while (totalRead < messageLength)
+                    {
+                        int n = await clientStream.ReadAsync(messageBytes, totalRead, messageLength - totalRead, token);
+                        if (n == 0)
+                            throw new IOException("Client disconnected while reading message body");
+                        totalRead += n;
+                    }
+
+                    var json = Encoding.UTF8.GetString(messageBytes);
                     Console.WriteLine(json);
                     var baseRequest = JsonSerializer.Deserialize<Request>(json);
                     if (baseRequest?.Type == RequestType.Reg)
@@ -177,6 +196,9 @@ namespace Server
 
                     response.IsSuccess = true;
                     response.Message = "Successfully logined.";
+                    response.UserId = result.Id;
+                    response.UserLogin = result.Login;
+
                     await RespondToSenderAsync(sender, response, token);
                     _ = HandleConnectedUserAsync(user, token);
 
@@ -211,54 +233,212 @@ namespace Server
                     new MessageReceivedEventArgs { Message = $"[{DateTime.Now:HH:mm:ss}] {user.Login} - Connected" });
 
                 var stream = user.Client.GetStream();
-                var buffer = new byte[BUFFER_SIZE];
+                var lenBytes = new byte[4];
+
                 while (!token.IsCancellationRequested)
                 {
-                    var size = await stream.ReadAsync(buffer, 0, buffer.Length, token);
-                    if (size == 0)
-                        break;
-
-                    var json = Encoding.UTF8.GetString(buffer, 0, size);
-                    Console.WriteLine(json);
-                    var baseRequest = JsonSerializer.Deserialize<Request>(json);
-                    if (baseRequest?.Type == RequestType.Disconnect)
+                    int read = 0;
+                    while (read < 4)
                     {
-                        MessageReceived.Invoke(this,
-                            new MessageReceivedEventArgs { Message = $"[{DateTime.Now:HH:mm:ss}] [{baseRequest?.Type.ToString()}] {user.Login}" });
-                        lock(connectedUsersLockObject)
+                        int n = await stream.ReadAsync(lenBytes, read, 4 - read, token);
+                        if (n == 0)
                         {
-                            _connectedUsers.Remove(user);
+                            throw new IOException("Client disconnected while reading message length");
                         }
-                        UserDisconnected.Invoke(this,
-                            new UserDisconnectedEventArgs { User = user });
+                        read += n;
+                    }
+
+                    int messageLength = BitConverter.ToInt32(lenBytes, 0);
+                    if (messageLength <= 0)
+                    {
+                        Console.WriteLine($"Invalid message length: {messageLength}");
                         break;
                     }
-                    if (baseRequest?.Type == RequestType.Add)
+
+                    byte[] messageBytes = new byte[messageLength];
+                    int totalRead = 0;
+                    while (totalRead < messageLength)
                     {
-                        //var concreteRequest = JsonSerializer.Deserialize<>(json);
+                        int n = await stream.ReadAsync(messageBytes, totalRead, messageLength - totalRead, token);
+                        if (n == 0)
+                        {
+                            throw new IOException("Client disconnected while reading message body");
+                        }
+                        totalRead += n;
+                    }
+
+                    var json = Encoding.UTF8.GetString(messageBytes);
+                    Console.WriteLine("Received JSON: " + json);
+
+                    var baseRequest = JsonSerializer.Deserialize<Request>(json);
+                    if (baseRequest == null)
+                    {
+                        Console.WriteLine("Received invalid request (null baseRequest)");
+                        continue;
+                    }
+
+                    switch (baseRequest.Type)
+                    {
+                        case RequestType.Disconnect:
+                            MessageReceived.Invoke(this,
+                                new MessageReceivedEventArgs { Message = $"[{DateTime.Now:HH:mm:ss}] [{baseRequest.Type}] {user.Login}" });
+                            lock (connectedUsersLockObject)
+                            {
+                                _connectedUsers.Remove(user);
+                            }
+                            UserDisconnected?.Invoke(this, new UserDisconnectedEventArgs { User = user });
+                            return;
+                        case RequestType.GetWallets:
+                            {
+                                var req = JsonSerializer.Deserialize<GetWalletsRequest>(json);
+                                var wallets = await _db.GetWalletsAsync(req.UserId);
+                                var response = new GetWalletsResponse { Wallets = wallets };
+                                await RespondToSenderAsync(user.Client, response, token);
+                            }
+                            break;
+                        case RequestType.GetCurrencies:
+                            {
+                                var req = JsonSerializer.Deserialize<GetCurrenciesRequest>(json);
+                                var currencies = await _db.GetCurrenciesAsync();
+                                var response = new GetCurrenciesResponse { Currencies = currencies };
+                                await RespondToSenderAsync(user.Client, response, token);
+                            }
+                            break;
+                        case RequestType.AddWallet:
+                            {
+                                var req = JsonSerializer.Deserialize<AddWalletRequest>(json);
+                                var res = await _db.AddWalletAsync(req.Name, req.Balance, req.UserId, req.CurrencyId);
+                                var response = new AddWalletResponse { IsSuccess = res.IsSuccess, Message = res.Message };
+                                await RespondToSenderAsync(user.Client, response, token);
+                            }
+                            break;
+                        case RequestType.DeleteWallet:
+                            {
+                                var req = JsonSerializer.Deserialize<DeleteWalletRequest>(json);
+                                var res = await _db.DeleteWalletAsync(req.UserId, req.WalletName);
+                                var response = new DeleteWalletResponse { IsSuccess = res.IsSuccess, Message = res.Message };
+                                await RespondToSenderAsync(user.Client, response, token);
+                            }
+                            break;
+                        case RequestType.GetTransactionTypes:
+                            {
+                                var req = JsonSerializer.Deserialize<GetTransactionTypesRequest>(json);
+                                var types = await _db.GetTransactionTypesAsync();
+                                var response = new GetTransactionTypesResponse { TransactionTypes = types };
+                                await RespondToSenderAsync(user.Client, response, token);
+                            }
+                            break;
+                        case RequestType.GetCategories:
+                            {
+                                var req = JsonSerializer.Deserialize<GetCategoriesRequest>(json);
+                                var cats = await _db.GetCategoriesAsync();
+                                var response = new GetCategoriesResponse { Categories = cats };
+                                await RespondToSenderAsync(user.Client, response, token);
+                            }
+                            break;
+                        case RequestType.AddCategory:
+                            {
+                                var req = JsonSerializer.Deserialize<AddCategoryRequest>(json);
+                                var res = await _db.AddCategoryAsync(req.Name, req.TransactionTypeId);
+                                var response = new AddCategoryResponse { IsSuccess = res.IsSuccess, Message = res.Message };
+                                await RespondToSenderAsync(user.Client, response, token);
+                            }
+                            break;
+                        case RequestType.DeleteCategory:
+                            {
+                                var req = JsonSerializer.Deserialize<DeleteCategoryRequest>(json);
+                                var res = await _db.DeleteCategoryAsync(req.Name, req.TransactionTypeId);
+                                var response = new DeleteCategoryResponse { IsSuccess = res.IsSuccess, Message = res.Message };
+                                await RespondToSenderAsync(user.Client, response, token);
+                            }
+                            break;
+                        case RequestType.GetTransactions:
+                            {
+                                var req = JsonSerializer.Deserialize<GetTransactionsRequest>(json);
+                                var tr = await _db.GetTransactionsAsync(req.UserId);
+                                var response = new GetTransactionsResponse { Transactions = tr };
+                                await RespondToSenderAsync(user.Client, response, token);
+                            }
+                            break;
+                        case RequestType.AddTransaction:
+                            {
+                                var req = JsonSerializer.Deserialize<AddTransactionRequest>(json);
+                                var res = await _db.AddTransactionAsync(
+                                    req.WalletId,
+                                    req.CurrencyId,
+                                    req.CategoryId,
+                                    req.Amount,
+                                    req.DateTime,
+                                    req.Note);
+                                var response = new AddTransactionResponse { IsSuccess = res.IsSuccess, Message = res.Message };
+                                await RespondToSenderAsync(user.Client, response, token);
+                            }
+                            break;
+                        case RequestType.DeleteTransaction:
+                            {
+                                var req = JsonSerializer.Deserialize<DeleteTransactionRequest>(json);
+                                var transactionId = req.TransactionId;
+                                var res = await _db.DeleteTransactionAsync(transactionId);
+                                var response = new DeleteTransactionResponse { IsSuccess = res.IsSuccess, Message = res.Message };
+                                await RespondToSenderAsync(user.Client, response, token);
+                            }
+                            break;
+                        default:
+                            Console.WriteLine($"Unknown request type: {baseRequest.Type}");
+                            break;
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"HandleConnectedUserAsync: {ex.Message}");
+                Console.WriteLine($"HandleConnectedUserAsync: {ex}");
             }
         }
+
         private async Task RespondToSenderAsync(TcpClient sender, Response response, CancellationToken token)
         {
             Console.WriteLine("In RespondToSenderAsync");
             var json = JsonSerializer.Serialize(response);
+            Console.WriteLine($"Json to send: {json}");
             var data = Encoding.UTF8.GetBytes(json);
-            await sender.GetStream().WriteAsync(data, 0, data.Length, token);
+
+            var lengthPrefix = BitConverter.GetBytes(data.Length);
+
+            var stream = sender.GetStream();
+
+            await stream.WriteAsync(lengthPrefix, 0, lengthPrefix.Length, token);
+            await stream.WriteAsync(data, 0, data.Length, token);
+            await stream.FlushAsync(token);
+        }
+        public async Task DisconnectUserAsync(ConnectedUser user)
+        {
+            try
+            {
+                lock (connectedUsersLockObject)
+                {
+                    _connectedUsers.Remove(user);
+                }
+                UserDisconnected.Invoke(this,
+                    new UserDisconnectedEventArgs { User = user });
+                var response = new DisconnectUserResponse { Message = "Server closed connection." };
+                await RespondToSenderAsync(user.Client, response, _cts.Token);
+                user.Client.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"DisconnectUserAsync: {ex.Message}");
+            }
         }
         public async Task StopAsync()
         {
+            var tasks = new List<Task>();
+            foreach (var user in _connectedUsers.ToList())
+            {
+                tasks.Add(DisconnectUserAsync(user));
+            }
+            await Task.WhenAll(tasks);
             _cts.Cancel();
             _server.Stop();
-            foreach (var user in _connectedUsers)
-            {
-                user.Client.Close();
-            }
         }
     }
 }

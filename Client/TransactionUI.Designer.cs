@@ -69,9 +69,10 @@
             panel2.BackColor = Color.White;
             panel2.Controls.Add(TransactionList);
             panel2.Controls.Add(label3);
-            panel2.Location = new Point(30, 29);
+            panel2.Location = new Point(16, 14);
+            panel2.Margin = new Padding(2, 1, 2, 1);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1431, 490);
+            panel2.Size = new Size(771, 230);
             panel2.TabIndex = 4;
             // 
             // TransactionList
@@ -86,19 +87,21 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             TransactionList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             TransactionList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            TransactionList.Location = new Point(29, 103);
+            TransactionList.Location = new Point(16, 48);
+            TransactionList.Margin = new Padding(2, 1, 2, 1);
             TransactionList.Name = "TransactionList";
             TransactionList.RowHeadersWidth = 82;
-            TransactionList.Size = new Size(1375, 360);
+            TransactionList.Size = new Size(740, 169);
             TransactionList.TabIndex = 4;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Tahoma", 13.875F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            label3.Location = new Point(29, 33);
+            label3.Location = new Point(16, 15);
+            label3.Margin = new Padding(2, 0, 2, 0);
             label3.Name = "label3";
-            label3.Size = new Size(276, 45);
+            label3.Size = new Size(140, 23);
             label3.TabIndex = 3;
             label3.Text = "Transaction List";
             // 
@@ -131,88 +134,98 @@
             panel1.Controls.Add(TransactionAdd_btn);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(label1);
-            panel1.Location = new Point(30, 547);
+            panel1.Location = new Point(16, 256);
+            panel1.Margin = new Padding(2, 1, 2, 1);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1431, 425);
+            panel1.Size = new Size(771, 199);
             panel1.TabIndex = 5;
             // 
             // TransactionAddAmount_BX
             // 
             TransactionAddAmount_BX.BorderStyle = BorderStyle.FixedSingle;
-            TransactionAddAmount_BX.Location = new Point(212, 192);
+            TransactionAddAmount_BX.Location = new Point(114, 90);
+            TransactionAddAmount_BX.Margin = new Padding(2, 1, 2, 1);
             TransactionAddAmount_BX.Name = "TransactionAddAmount_BX";
-            TransactionAddAmount_BX.Size = new Size(348, 39);
+            TransactionAddAmount_BX.Size = new Size(188, 23);
             TransactionAddAmount_BX.TabIndex = 41;
             // 
             // TransactionFilterCategory_BX
             // 
             TransactionFilterCategory_BX.FormattingEnabled = true;
-            TransactionFilterCategory_BX.Location = new Point(1139, 134);
+            TransactionFilterCategory_BX.Location = new Point(613, 63);
+            TransactionFilterCategory_BX.Margin = new Padding(2, 1, 2, 1);
             TransactionFilterCategory_BX.Name = "TransactionFilterCategory_BX";
-            TransactionFilterCategory_BX.Size = new Size(256, 40);
+            TransactionFilterCategory_BX.Size = new Size(140, 23);
             TransactionFilterCategory_BX.TabIndex = 40;
             // 
             // label12
             // 
             label12.AutoSize = true;
             label12.Font = new Font("Tahoma", 10.875F);
-            label12.Location = new Point(999, 134);
+            label12.Location = new Point(538, 63);
+            label12.Margin = new Padding(2, 0, 2, 0);
             label12.Name = "label12";
-            label12.Size = new Size(128, 35);
+            label12.Size = new Size(67, 18);
             label12.TabIndex = 39;
             label12.Text = "Category";
             // 
             // TransactionFilterWallet_BX
             // 
             TransactionFilterWallet_BX.FormattingEnabled = true;
-            TransactionFilterWallet_BX.Location = new Point(1139, 23);
+            TransactionFilterWallet_BX.Location = new Point(613, 11);
+            TransactionFilterWallet_BX.Margin = new Padding(2, 1, 2, 1);
             TransactionFilterWallet_BX.Name = "TransactionFilterWallet_BX";
-            TransactionFilterWallet_BX.Size = new Size(256, 40);
+            TransactionFilterWallet_BX.Size = new Size(140, 23);
             TransactionFilterWallet_BX.TabIndex = 38;
             // 
             // label11
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Tahoma", 10.875F);
-            label11.Location = new Point(999, 23);
+            label11.Location = new Point(538, 11);
+            label11.Margin = new Padding(2, 0, 2, 0);
             label11.Name = "label11";
-            label11.Size = new Size(95, 35);
+            label11.Size = new Size(47, 18);
             label11.TabIndex = 37;
             label11.Text = "Wallet";
             // 
             // TransactionFilterType_BX
             // 
             TransactionFilterType_BX.FormattingEnabled = true;
-            TransactionFilterType_BX.Location = new Point(1139, 78);
+            TransactionFilterType_BX.Location = new Point(613, 37);
+            TransactionFilterType_BX.Margin = new Padding(2, 1, 2, 1);
             TransactionFilterType_BX.Name = "TransactionFilterType_BX";
-            TransactionFilterType_BX.Size = new Size(256, 40);
+            TransactionFilterType_BX.Size = new Size(140, 23);
             TransactionFilterType_BX.TabIndex = 36;
             // 
             // label10
             // 
             label10.AutoSize = true;
             label10.Font = new Font("Tahoma", 10.875F);
-            label10.Location = new Point(999, 78);
+            label10.Location = new Point(538, 37);
+            label10.Margin = new Padding(2, 0, 2, 0);
             label10.Name = "label10";
-            label10.Size = new Size(77, 35);
+            label10.Size = new Size(42, 18);
             label10.TabIndex = 35;
             label10.Text = "Type";
             // 
             // TransactionDel_BX
             // 
             TransactionDel_BX.FormattingEnabled = true;
-            TransactionDel_BX.Location = new Point(591, 255);
+            TransactionDel_BX.Location = new Point(318, 120);
+            TransactionDel_BX.Margin = new Padding(2, 1, 2, 1);
             TransactionDel_BX.Name = "TransactionDel_BX";
-            TransactionDel_BX.Size = new Size(370, 40);
+            TransactionDel_BX.Size = new Size(201, 23);
             TransactionDel_BX.TabIndex = 34;
             // 
             // label9
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Tahoma", 10.875F);
-            label9.Location = new Point(591, 207);
+            label9.Location = new Point(318, 97);
+            label9.Margin = new Padding(2, 0, 2, 0);
             label9.Name = "label9";
-            label9.Size = new Size(370, 35);
+            label9.Size = new Size(189, 18);
             label9.TabIndex = 33;
             label9.Text = "Select Transaction to delete";
             // 
@@ -220,9 +233,10 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Tahoma", 10.875F);
-            label4.Location = new Point(39, 255);
+            label4.Location = new Point(21, 120);
+            label4.Margin = new Padding(2, 0, 2, 0);
             label4.Name = "label4";
-            label4.Size = new Size(156, 35);
+            label4.Size = new Size(82, 18);
             label4.TabIndex = 32;
             label4.Text = "Timestamp";
             // 
@@ -230,28 +244,31 @@
             // 
             TransactionAddDateTime.CustomFormat = "dd.MM.yyyy HH:mm:ss";
             TransactionAddDateTime.Format = DateTimePickerFormat.Custom;
-            TransactionAddDateTime.Location = new Point(212, 256);
+            TransactionAddDateTime.Location = new Point(114, 120);
+            TransactionAddDateTime.Margin = new Padding(2, 1, 2, 1);
             TransactionAddDateTime.Name = "TransactionAddDateTime";
-            TransactionAddDateTime.Size = new Size(348, 39);
+            TransactionAddDateTime.Size = new Size(189, 23);
             TransactionAddDateTime.TabIndex = 31;
             // 
             // TransactionAddDetails_BX
             // 
-            TransactionAddDetails_BX.Location = new Point(591, 28);
+            TransactionAddDetails_BX.Location = new Point(318, 13);
+            TransactionAddDetails_BX.Margin = new Padding(2, 1, 2, 1);
             TransactionAddDetails_BX.Multiline = true;
             TransactionAddDetails_BX.Name = "TransactionAddDetails_BX";
             TransactionAddDetails_BX.PlaceholderText = "Write transaction details here.";
             TransactionAddDetails_BX.ScrollBars = ScrollBars.Vertical;
-            TransactionAddDetails_BX.Size = new Size(370, 162);
+            TransactionAddDetails_BX.Size = new Size(201, 78);
             TransactionAddDetails_BX.TabIndex = 30;
             // 
             // label8
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Tahoma", 10.875F);
-            label8.Location = new Point(88, 196);
+            label8.Location = new Point(47, 92);
+            label8.Margin = new Padding(2, 0, 2, 0);
             label8.Name = "label8";
-            label8.Size = new Size(114, 35);
+            label8.Size = new Size(59, 18);
             label8.TabIndex = 28;
             label8.Text = "Amount";
             // 
@@ -259,9 +276,10 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Tahoma", 10.875F);
-            label7.Location = new Point(995, 255);
+            label7.Location = new Point(536, 120);
+            label7.Margin = new Padding(2, 0, 2, 0);
             label7.Name = "label7";
-            label7.Size = new Size(128, 35);
+            label7.Size = new Size(66, 18);
             label7.TabIndex = 27;
             label7.Text = "End date";
             // 
@@ -269,36 +287,40 @@
             // 
             TransactionFilterEndDate_BX.CustomFormat = "dd.MM.yyyy HH:mm:ss";
             TransactionFilterEndDate_BX.Format = DateTimePickerFormat.Custom;
-            TransactionFilterEndDate_BX.Location = new Point(1139, 255);
+            TransactionFilterEndDate_BX.Location = new Point(613, 120);
+            TransactionFilterEndDate_BX.Margin = new Padding(2, 1, 2, 1);
             TransactionFilterEndDate_BX.Name = "TransactionFilterEndDate_BX";
-            TransactionFilterEndDate_BX.Size = new Size(256, 39);
+            TransactionFilterEndDate_BX.Size = new Size(140, 23);
             TransactionFilterEndDate_BX.TabIndex = 26;
             // 
             // label6
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Tahoma", 10.875F);
-            label6.Location = new Point(995, 192);
+            label6.Location = new Point(536, 90);
+            label6.Margin = new Padding(2, 0, 2, 0);
             label6.Name = "label6";
-            label6.Size = new Size(141, 35);
+            label6.Size = new Size(73, 18);
             label6.TabIndex = 25;
             label6.Text = "Start date";
             // 
             // TransactionAddCategory_BX
             // 
             TransactionAddCategory_BX.FormattingEnabled = true;
-            TransactionAddCategory_BX.Location = new Point(212, 139);
+            TransactionAddCategory_BX.Location = new Point(114, 65);
+            TransactionAddCategory_BX.Margin = new Padding(2, 1, 2, 1);
             TransactionAddCategory_BX.Name = "TransactionAddCategory_BX";
-            TransactionAddCategory_BX.Size = new Size(348, 40);
+            TransactionAddCategory_BX.Size = new Size(189, 23);
             TransactionAddCategory_BX.TabIndex = 23;
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Tahoma", 10.875F);
-            label5.Location = new Point(72, 139);
+            label5.Location = new Point(39, 65);
+            label5.Margin = new Padding(2, 0, 2, 0);
             label5.Name = "label5";
-            label5.Size = new Size(128, 35);
+            label5.Size = new Size(67, 18);
             label5.TabIndex = 21;
             label5.Text = "Category";
             // 
@@ -306,25 +328,28 @@
             // 
             TransactionFilterStartDate_BX.CustomFormat = "dd.MM.yyyy HH:mm:ss";
             TransactionFilterStartDate_BX.Format = DateTimePickerFormat.Custom;
-            TransactionFilterStartDate_BX.Location = new Point(1139, 192);
+            TransactionFilterStartDate_BX.Location = new Point(613, 90);
+            TransactionFilterStartDate_BX.Margin = new Padding(2, 1, 2, 1);
             TransactionFilterStartDate_BX.Name = "TransactionFilterStartDate_BX";
-            TransactionFilterStartDate_BX.Size = new Size(256, 39);
+            TransactionFilterStartDate_BX.Size = new Size(140, 23);
             TransactionFilterStartDate_BX.TabIndex = 20;
             // 
             // TransactionAddCurrency_Bx
             // 
             TransactionAddCurrency_Bx.FormattingEnabled = true;
-            TransactionAddCurrency_Bx.Location = new Point(212, 84);
+            TransactionAddCurrency_Bx.Location = new Point(114, 39);
+            TransactionAddCurrency_Bx.Margin = new Padding(2, 1, 2, 1);
             TransactionAddCurrency_Bx.Name = "TransactionAddCurrency_Bx";
-            TransactionAddCurrency_Bx.Size = new Size(348, 40);
+            TransactionAddCurrency_Bx.Size = new Size(189, 23);
             TransactionAddCurrency_Bx.TabIndex = 19;
             // 
             // TransactionAddWallet_BX
             // 
             TransactionAddWallet_BX.FormattingEnabled = true;
-            TransactionAddWallet_BX.Location = new Point(212, 28);
+            TransactionAddWallet_BX.Location = new Point(114, 13);
+            TransactionAddWallet_BX.Margin = new Padding(2, 1, 2, 1);
             TransactionAddWallet_BX.Name = "TransactionAddWallet_BX";
-            TransactionAddWallet_BX.Size = new Size(348, 40);
+            TransactionAddWallet_BX.Size = new Size(189, 23);
             TransactionAddWallet_BX.TabIndex = 18;
             // 
             // TransactionDel_btn
@@ -337,13 +362,14 @@
             TransactionDel_btn.FlatStyle = FlatStyle.Flat;
             TransactionDel_btn.Font = new Font("Tahoma", 13.875F, FontStyle.Regular, GraphicsUnit.Point, 204);
             TransactionDel_btn.ForeColor = Color.White;
-            TransactionDel_btn.Location = new Point(631, 340);
-            TransactionDel_btn.Margin = new Padding(25);
+            TransactionDel_btn.Location = new Point(340, 159);
+            TransactionDel_btn.Margin = new Padding(13, 12, 13, 12);
             TransactionDel_btn.Name = "TransactionDel_btn";
-            TransactionDel_btn.Size = new Size(170, 60);
+            TransactionDel_btn.Size = new Size(92, 28);
             TransactionDel_btn.TabIndex = 17;
             TransactionDel_btn.Text = "Delete";
             TransactionDel_btn.UseVisualStyleBackColor = false;
+            TransactionDel_btn.Click += TransactionDel_btn_Click;
             // 
             // TransactionFilter_btn
             // 
@@ -355,13 +381,14 @@
             TransactionFilter_btn.FlatStyle = FlatStyle.Flat;
             TransactionFilter_btn.Font = new Font("Tahoma", 13.875F, FontStyle.Regular, GraphicsUnit.Point, 204);
             TransactionFilter_btn.ForeColor = Color.White;
-            TransactionFilter_btn.Location = new Point(1011, 340);
-            TransactionFilter_btn.Margin = new Padding(25);
+            TransactionFilter_btn.Location = new Point(544, 159);
+            TransactionFilter_btn.Margin = new Padding(13, 12, 13, 12);
             TransactionFilter_btn.Name = "TransactionFilter_btn";
-            TransactionFilter_btn.Size = new Size(170, 60);
+            TransactionFilter_btn.Size = new Size(92, 28);
             TransactionFilter_btn.TabIndex = 16;
             TransactionFilter_btn.Text = "Filter";
             TransactionFilter_btn.UseVisualStyleBackColor = false;
+            TransactionFilter_btn.Click += TransactionFilter_btn_Click;
             // 
             // TransactionAdd_btn
             // 
@@ -373,21 +400,23 @@
             TransactionAdd_btn.FlatStyle = FlatStyle.Flat;
             TransactionAdd_btn.Font = new Font("Tahoma", 13.875F, FontStyle.Regular, GraphicsUnit.Point, 204);
             TransactionAdd_btn.ForeColor = Color.White;
-            TransactionAdd_btn.Location = new Point(210, 340);
-            TransactionAdd_btn.Margin = new Padding(25);
+            TransactionAdd_btn.Location = new Point(113, 159);
+            TransactionAdd_btn.Margin = new Padding(13, 12, 13, 12);
             TransactionAdd_btn.Name = "TransactionAdd_btn";
-            TransactionAdd_btn.Size = new Size(170, 60);
+            TransactionAdd_btn.Size = new Size(92, 28);
             TransactionAdd_btn.TabIndex = 15;
             TransactionAdd_btn.Text = "Add";
             TransactionAdd_btn.UseVisualStyleBackColor = false;
+            TransactionAdd_btn.Click += TransactionAdd_btn_Click;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Tahoma", 10.875F);
-            label2.Location = new Point(71, 84);
+            label2.Location = new Point(38, 39);
+            label2.Margin = new Padding(2, 0, 2, 0);
             label2.Name = "label2";
-            label2.Size = new Size(126, 35);
+            label2.Size = new Size(66, 18);
             label2.TabIndex = 14;
             label2.Text = "Currency";
             // 
@@ -395,20 +424,22 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Tahoma", 10.875F);
-            label1.Location = new Point(100, 28);
+            label1.Location = new Point(54, 13);
+            label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new Size(95, 35);
+            label1.Size = new Size(47, 18);
             label1.TabIndex = 13;
             label1.Text = "Wallet";
             // 
             // TransactionUI
             // 
-            AutoScaleDimensions = new SizeF(13F, 32F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel1);
             Controls.Add(panel2);
+            Margin = new Padding(2, 1, 2, 1);
             Name = "TransactionUI";
-            Size = new Size(1494, 1009);
+            Size = new Size(804, 473);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)TransactionList).EndInit();
