@@ -1,4 +1,5 @@
 
+using Client.Events;
 using Shared.Requests;
 using Shared.Responses;
 

@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Client
+namespace Client.Events
 {
-    public class WalletsReceivedEventArgs
+    public class TransactionTypesReceivedEventArgs
     {
-        public List<WalletDTO>? Wallets { get; set; } 
+        public List<TransactionTypeDTO>? TransactionTypes { get; set; }
     }
 }

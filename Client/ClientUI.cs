@@ -93,7 +93,7 @@ namespace Client
         {
             //clear panel
             ClientPanel_pnl.Controls.Clear();
-            TransactionUI transaction = new TransactionUI();
+            TransactionUI transaction = new TransactionUI(_client, _userInfo);
             ClientPanel_pnl.Controls.Add(transaction);
             transaction.Show();
             transaction.Dock = DockStyle.Fill;

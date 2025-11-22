@@ -27,9 +27,14 @@ namespace Infrastructure
                 .IsUnique();
             });
 
-            modelBuilder.Entity<User>()
-                .HasIndex(u => u.Login)
-                .IsUnique();
+            // User <=> TransactionCategories
+            //modelBuilder.Entity<User>(u =>
+            //{
+            //    u.HasMany(u => u.TransactionCategories)
+            //    .WithOne(tc => tc.User)
+            //    .HasForeignKey(tc => tc.UserId)
+            //    .OnDelete(DeleteBehavior.Cascade);
+            //});
 
             // Wallet <=> Transactions
             modelBuilder.Entity<Wallet>(w =>

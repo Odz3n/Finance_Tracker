@@ -11,6 +11,10 @@ namespace Shared.DTOs
         public int Id { get; set; }
         public string Name { get; set; }
         public int TransactionTypeId { get; set; }
+        public override string ToString()
+        {
+            return $"{Name} - {TransactionTypeId}";
+        }
 
     }
 }

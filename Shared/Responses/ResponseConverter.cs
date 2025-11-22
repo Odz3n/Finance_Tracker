@@ -42,6 +42,12 @@ namespace Shared.Responses
                         return jsonDoc.Deserialize<DeleteCategoryResponse>(options);
                     case (int)ResponseType.Disconnect:
                         return jsonDoc.Deserialize<DisconnectUserResponse>(options);
+                    case (int)ResponseType.GetTransactions:
+                        return jsonDoc.Deserialize<GetTransactionsResponse>(options);
+                    case (int)ResponseType.AddTransaction:
+                        return jsonDoc.Deserialize<AddTransactionResponse>(options);
+                    case (int)ResponseType.DeleteTransaction:
+                        return jsonDoc.Deserialize<DeleteTransactionResponse>(options);
                     default:
                         throw new JsonException("'Type' doesn't match a known derived type");
                 }

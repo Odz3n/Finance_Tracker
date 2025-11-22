@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Client
+namespace Client.Events
 {
-    public class DisconnectMessageReceivedEventArgs: EventArgs
+    public class MessageReceivedEventArgs: EventArgs
     {
+        public bool? IsSuccess { get; set; }
         public string? Message { get; set; }
     }
 }

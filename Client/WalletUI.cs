@@ -1,4 +1,5 @@
-﻿using Shared.DTOs;
+﻿using Client.Events;
+using Shared.DTOs;
 using Shared.Requests;
 using System;
 using System.Collections.Generic;
@@ -51,6 +52,12 @@ namespace Client
 
         private async void WalletDel_btn_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(WalletNameBX.Text))
+            {
+                MessageBox.Show("Wallet name must be provided!", "Warning",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             var res = MessageBox.Show("Are you sure you want to delete this wallet?", "Confirm Deletion",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (res == DialogResult.Yes)
@@ -60,6 +67,7 @@ namespace Client
 
                 var request = new DeleteWalletRequest { UserId = _userInfo.Id, WalletName = WalletNameBX.Text };
                 await _client.SendRequestAsync(request, _cts.Token);
+                await _client.SendRequestAsync(new GetWalletsRequest { UserId = _userInfo.Id }, _cts.Token);
             }
         }
 
@@ -67,6 +75,12 @@ namespace Client
         {
             try
             {
+                if (string.IsNullOrEmpty(WalletNameBX.Text))
+                {
+                    MessageBox.Show("Wallet name must be provided!", "Warning",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 var currencyDto = WalletCurrencyBX.SelectedItem as CurrencyDTO;
                 if (currencyDto == null)
                 {
@@ -82,11 +96,7 @@ namespace Client
                     Balance = 0m
                 };
                 await _client.SendRequestAsync(request, _cts.Token);
-                var walletsRequest = new GetWalletsRequest
-                {
-                    UserId = _userInfo.Id
-                };
-                await _client.SendRequestAsync(walletsRequest, _cts.Token);
+                await _client.SendRequestAsync(new GetWalletsRequest { UserId = _userInfo.Id }, _cts.Token);
             }
             catch (Exception ex)
             {

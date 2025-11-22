@@ -42,6 +42,12 @@ namespace Shared.Requests
                         return jsonDoc.Deserialize<AddCategoryRequest>(options);
                     case (int)RequestType.DeleteCategory:
                         return jsonDoc.Deserialize<DeleteCategoryRequest>(options);
+                    case (int)RequestType.GetTransactions:
+                        return jsonDoc.Deserialize<GetTransactionsRequest>(options);
+                    case (int)RequestType.AddTransaction:
+                        return jsonDoc.Deserialize<AddTransactionRequest>(options);
+                    case (int)RequestType.DeleteTransaction:
+                        return jsonDoc.Deserialize<DeleteTransactionRequest>(options);
                     default:
                         throw new JsonException("'Type' doesn't match a known derived type");
                 }

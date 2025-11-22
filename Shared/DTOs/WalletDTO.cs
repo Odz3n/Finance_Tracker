@@ -13,5 +13,9 @@ namespace Shared.DTOs
         public decimal Balance { get; set; }
         public int UserId { get; set; }
         public int CurrencyId { get; set; }
+        public override string ToString()
+        {
+            return $"{Name}";
+        }
     }
 }

@@ -100,6 +100,58 @@ namespace Infrastructure
                 return new DbOperationResult { IsSuccess = false, Message = $"Exception occurd '{ex.Message}'" };
             }
         }
+        public async Task<DbOperationResult> AddTransactionAsync(int walletId, int currencyId, int categoryId, decimal amount, DateTime date, string? note)
+        {
+            try
+            {
+                var transaction = new Transaction
+                {
+                    WalletId = walletId,
+                    CurrencyId = currencyId,
+                    TransactionCategoryId = categoryId,
+                    Value = amount,
+                    Date = date,
+                    Note = note ?? ""
+                };
+
+                var wallet = await _context.Wallets
+                    .Include(w => w.Transactions)
+                    .FirstOrDefaultAsync(w => w.Id == walletId);
+
+                if (wallet == null)
+                    return new DbOperationResult { IsSuccess = false, Message = "Wallet not found." };
+
+                var category = await _context.TransactionCategories
+                    .Include(c => c.TransactionType)
+                    .FirstOrDefaultAsync(c => c.Id == categoryId);
+
+                if (category?.TransactionType == null)
+                {
+                    return new DbOperationResult { IsSuccess = false, Message = "Transaction category or type not found." };
+                }
+
+                Console.WriteLine($"Transaction Type: {category.TransactionType.Name}");
+
+                if (category.TransactionType.Name == "Income")
+                    wallet.Balance += amount;
+                else if (category.TransactionType.Name == "Expense")
+                    wallet.Balance -= amount;
+                else
+                {
+                    return new DbOperationResult { IsSuccess = false, Message = "Invalid transaction type." };
+                }
+
+                await _context.Transactions.AddAsync(transaction);
+                await _context.SaveChangesAsync();
+
+                return new DbOperationResult { IsSuccess = true, Message = "Transaction added." };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"AddTransactionAsync: {ex.Message}");
+                return new DbOperationResult { IsSuccess = false, Message = "Exception occurred." };
+            }
+        }
         public async Task<DbOperationResult> DeleteWalletAsync(int userId, string walletName)
         {
             try
@@ -141,6 +193,26 @@ namespace Infrastructure
             {
                 Console.WriteLine($"DeleteCategoryAsync: {ex.Message}");
                 return new DbOperationResult { IsSuccess = false, Message = $"Exception occured: {ex.Message}" };
+            }
+        }
+        public async Task<DbOperationResult> DeleteTransactionAsync(int transactionId)
+        {
+            try
+            {
+                var transaction = await _context.Transactions
+                    .Where(t => t.Id == transactionId)
+                    .FirstOrDefaultAsync();
+                if (transaction == null)
+                    return new DbOperationResult { IsSuccess = false, Message = "No such transaction in Data Base." };
+
+                _context.Transactions.Remove(transaction);
+                await _context.SaveChangesAsync();
+                return new DbOperationResult { IsSuccess = true, Message = "Transaction deleted." };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"DeleteTransactionAsync: {ex.Message}");
+                return new DbOperationResult { IsSuccess = false, Message = $"Exception occured {ex.Message}." };
             }
         }
         public async Task<User?> GetUserByLoginAsync(string login)
@@ -237,6 +309,30 @@ namespace Infrastructure
             {
                 Console.WriteLine($"GetCategoriesAsync: {ex.Message}");
                 return new List<CategoryDTO>();
+            }
+        }
+        public async Task<List<TransactionDTO>?> GetTransactionsAsync(int userId)
+        {
+            try
+            {
+                var res = await _context.Transactions
+                    .Where(t => t.Wallet != null && t.Wallet.UserId == userId)
+                    .Select(t => new TransactionDTO
+                    {
+                        Id = t.Id,
+                        Date = t.Date,
+                        WalletId = t.WalletId,
+                        CurrencyId = t.CurrencyId,
+                        TransactionCategoryId = t.TransactionCategoryId,
+                        Value = t.Value,
+                        Note = t.Note
+                    }).ToListAsync();
+                return res;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetTransactionsAsync: {ex.Message}");
+                return new List<TransactionDTO>();
             }
         }
         public async Task<List<TransactionTypeDTO>?> GetTransactionTypesAsync()

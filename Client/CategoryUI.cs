@@ -1,4 +1,5 @@
-﻿using Shared.DTOs;
+﻿using Client.Events;
+using Shared.DTOs;
 using Shared.Requests;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,7 @@ namespace Client
             var transactionId = transaction.Id;
             var request = new AddCategoryRequest { Name = CategoryNameBX.Text, TransactionTypeId = transactionId };
             await _client.SendRequestAsync(request, _cts.Token);
+            await _client.SendRequestAsync(new GetCategoriesRequest(), _cts.Token);
         }
 
         private async void CategoryDel_btn_Click(object sender, EventArgs e)
@@ -82,6 +84,7 @@ namespace Client
                 var transactionId = transaction.Id;
                 var request = new DeleteCategoryRequest { Name = CategoryNameBX.Text, TransactionTypeId = transactionId };
                 await _client.SendRequestAsync(request, _cts.Token);
+                await _client.SendRequestAsync(new GetCategoriesRequest(), _cts.Token);
             }
             else
                 return;
