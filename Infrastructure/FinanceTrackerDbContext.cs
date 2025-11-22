@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
 {
-    public class FinanceTrackerDbContext: DbContext
+    public class FinanceTrackerDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Wallet> Wallets { get; set; }
@@ -11,8 +11,12 @@ namespace Infrastructure
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<TransactionType> TransactionTypes { get; set; }
         public DbSet<TransactionCategory> TransactionCategories { get; set; }
+
+        public DbSet<LogEntry> LogEntries { get; set; }
+
         public FinanceTrackerDbContext(DbContextOptions<FinanceTrackerDbContext> options)
             : base(options) { }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // User <=> Wallets

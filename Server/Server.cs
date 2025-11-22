@@ -1,112 +1,119 @@
 ﻿using Domain;
 using Infrastructure;
-using Microsoft.VisualBasic.ApplicationServices;
 using Server.Events;
 using Shared;
 using Shared.Requests;
 using Shared.Responses;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Server
 {
     public class Server
     {
-        TcpListener _server;
-        CancellationTokenSource _cts;
-        DbManager _db;
+        private TcpListener _server;
+        private CancellationTokenSource _cts;
+        private DbManager _db;
 
-        List<ConnectedUser> _connectedUsers;
-        object? connectedUsersLockObject = new object();
+        private readonly object connectedUsersLockObject = new object();
+        private List<ConnectedUser> _connectedUsers;
 
         public event EventHandler<UserConnectedEventArgs> UserConnected;
         public event EventHandler<UserDisconnectedEventArgs> UserDisconnected;
         public event EventHandler<MessageReceivedEventArgs> MessageReceived;
 
-        const int BUFFER_SIZE = 2048;
+        private const int BUFFER_SIZE = 2048;
 
         public IPAddress IPAddress { get; set; }
         public int Port { get; set; }
         public FinanceTrackerDbContext? Context { get; set; }
+
         public Server(IPAddress address, int port)
         {
             IPAddress = address;
             Port = port;
         }
+
         public async Task StartAsync()
         {
             try
             {
                 if (Context == null)
-                    throw new ArgumentNullException($"The '{nameof(Context)}' property must be specified before the server starts working.");
+                    throw new ArgumentNullException(nameof(Context),
+                        "The 'Context' property must be specified before the server starts working.");
 
                 _cts = new CancellationTokenSource();
-
                 _connectedUsers = new List<ConnectedUser>();
-
                 _db = new DbManager(Context);
 
                 _server = new TcpListener(IPAddress, Port);
                 _server.Start();
+
                 _ = HandleConnectionsAsync(_cts.Token);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"StartAsync: {ex.Message}");
+                await WriteLogAsync($"[ERROR] StartAsync: {ex.Message}");
             }
         }
+
         private async Task HandleConnectionsAsync(CancellationToken token)
         {
             try
             {
                 while (!token.IsCancellationRequested)
                 {
-                    var client = await _server.AcceptTcpClientAsync();
+                    var client = await _server.AcceptTcpClientAsync(token);
                     _ = HandleClientAsync(client, token);
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"HandleConnectionsAsync: {ex.Message}");
+                await WriteLogAsync($"[ERROR] HandleConnectionsAsync: {ex.Message}");
             }
         }
+
         private async Task HandleClientAsync(TcpClient client, CancellationToken token)
         {
             try
             {
                 var clientStream = client.GetStream();
                 var streamBuffer = new byte[BUFFER_SIZE];
+
                 while (!token.IsCancellationRequested)
                 {
-                    var bufferSize = await clientStream.ReadAsync(streamBuffer, 0, streamBuffer.Length);
+                    var bufferSize = await clientStream.ReadAsync(streamBuffer, 0, streamBuffer.Length, token);
 
                     if (bufferSize <= 0)
-                    {
                         break;
-                    }
 
                     var json = Encoding.UTF8.GetString(streamBuffer, 0, bufferSize);
                     Console.WriteLine(json);
+
+                    await WriteLogAsync($"[RECV] {json}");
+
                     var baseRequest = JsonSerializer.Deserialize<Request>(json);
-                    if (baseRequest?.Type == RequestType.Reg)
+                    if (baseRequest == null)
+                        continue;
+
+                    if (baseRequest.Type == RequestType.Reg)
                     {
                         var concreteRequest = JsonSerializer.Deserialize<RegistrationRequest>(json);
-                        Console.WriteLine(concreteRequest.LastName);
                         if (concreteRequest != null)
                             await HandleRegistrationRequestAsync(client, concreteRequest, token);
                     }
 
-                    if (baseRequest?.Type == RequestType.Auth)
+                    if (baseRequest.Type == RequestType.Auth)
                     {
                         var concreteRequest = JsonSerializer.Deserialize<AuthorizationRequest>(json);
-                        Console.WriteLine($"{concreteRequest.Login} - {concreteRequest.Password} - {client.Client.RemoteEndPoint}");
                         if (concreteRequest != null)
                         {
                             var res = await HandleAuthorizationRequestAsync(client, concreteRequest, token);
@@ -121,33 +128,41 @@ namespace Server
             catch (Exception ex)
             {
                 Console.WriteLine($"HandleClientAsync: {ex.Message}");
+                await WriteLogAsync($"[ERROR] HandleClientAsync: {ex.Message}");
             }
         }
+
         private async Task HandleRegistrationRequestAsync(TcpClient sender, RegistrationRequest request, CancellationToken token)
         {
             try
             {
-                var requestSender = sender;
                 var firstName = request.FirstName;
                 var lastName = request.LastName;
                 var login = request.Login;
                 (var hash, var salt) = PasswordHelper.HashPassword(request.Password);
+
                 var result = await _db.AddUserAsync(login, firstName, lastName, hash, salt);
 
-                var response = new RegistrationResponse { IsSuccess = result.IsSuccess, Message = result.Message };
+                var response = new RegistrationResponse
+                {
+                    IsSuccess = result.IsSuccess,
+                    Message = result.Message
+                };
 
-                var responseMessage = $"[{DateTime.Now:HH:mm:ss}] [{request.Type.ToString()}] {login} - {(response.IsSuccess ? "Registered" : "Fail")}";
+                var responseMessage =
+                    $"[{DateTime.Now:HH:mm:ss}] [REGISTER] {login} - {(response.IsSuccess ? "Registered" : "Fail")}";
 
-                MessageReceived.Invoke(this,
-                    new MessageReceivedEventArgs { Message = responseMessage });
+                await WriteLogAsync(responseMessage);
 
                 await RespondToSenderAsync(sender, response, token);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"HandleRegistrationRequestAsync: {ex.Message}");
+                await WriteLogAsync($"[ERROR] HandleRegistrationRequestAsync: {ex.Message}");
             }
         }
+
         private async Task<bool> HandleAuthorizationRequestAsync(TcpClient sender, AuthorizationRequest request, CancellationToken token)
         {
             try
@@ -158,6 +173,7 @@ namespace Server
                 var result = await _db.VerifyUser(login, password);
 
                 var response = new AuthorizationResponse();
+
                 if (result != null)
                 {
                     ConnectedUser user = new ConnectedUser
@@ -168,50 +184,54 @@ namespace Server
                         ConnectionTime = DateTime.Now
                     };
 
-                    lock(connectedUsersLockObject)
+                    lock (connectedUsersLockObject)
                     {
                         _connectedUsers.Add(user);
                     }
-                    UserConnected.Invoke(this,
-                            new UserConnectedEventArgs { User = user });
+
+                    UserConnected?.Invoke(this,
+                        new UserConnectedEventArgs { User = user });
 
                     response.IsSuccess = true;
                     response.Message = "Successfully logined.";
+
+                    await WriteLogAsync(
+                        $"[{DateTime.Now:HH:mm:ss}] [AUTH] {login} - Authorized");
+
                     await RespondToSenderAsync(sender, response, token);
+
                     _ = HandleConnectedUserAsync(user, token);
-
-                    MessageReceived.Invoke(this,
-                        new MessageReceivedEventArgs { Message = $"[{DateTime.Now:HH:mm:ss}] [{request.Type.ToString()}] {login} - {(response.IsSuccess ? "Authorized" : "Fail")}" });
-
                     return true;
                 }
                 else
                 {
                     response.IsSuccess = false;
                     response.Message = "Login failed. Incorrect password or username.";
+
+                    await WriteLogAsync(
+                        $"[{DateTime.Now:HH:mm:ss}] [AUTH] {login} - Fail");
+
                     await RespondToSenderAsync(sender, response, token);
-
-                    MessageReceived.Invoke(this,
-                        new MessageReceivedEventArgs { Message = $"[{DateTime.Now:HH:mm:ss}] [{request.Type.ToString()}] {login} - {(response.IsSuccess ? "Authorized" : "Fail")}" });
-
                     return false;
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"HandleAuthorizationRequestAsync: {ex.Message}");
+                await WriteLogAsync($"[ERROR] HandleAuthorizationRequestAsync: {ex.Message}");
                 return false;
             }
         }
+
         private async Task HandleConnectedUserAsync(ConnectedUser user, CancellationToken token)
         {
             try
             {
-                MessageReceived.Invoke(this,
-                    new MessageReceivedEventArgs { Message = $"[{DateTime.Now:HH:mm:ss}] {user.Login} - Connected" });
+                await WriteLogAsync($"[{DateTime.Now:HH:mm:ss}] {user.Login} - Connected");
 
                 var stream = user.Client.GetStream();
                 var buffer = new byte[BUFFER_SIZE];
+
                 while (!token.IsCancellationRequested)
                 {
                     var size = await stream.ReadAsync(buffer, 0, buffer.Length, token);
@@ -220,45 +240,100 @@ namespace Server
 
                     var json = Encoding.UTF8.GetString(buffer, 0, size);
                     Console.WriteLine(json);
+
+                    await WriteLogAsync($"[RECV-CONNECTED] {user.Login}: {json}");
+
                     var baseRequest = JsonSerializer.Deserialize<Request>(json);
-                    if (baseRequest?.Type == RequestType.Disconnect)
+                    if (baseRequest == null)
+                        continue;
+
+                    if (baseRequest.Type == RequestType.Disconnect)
                     {
-                        MessageReceived.Invoke(this,
-                            new MessageReceivedEventArgs { Message = $"[{DateTime.Now:HH:mm:ss}] [{baseRequest?.Type.ToString()}] {user.Login}" });
-                        lock(connectedUsersLockObject)
+                        await WriteLogAsync(
+                            $"[{DateTime.Now:HH:mm:ss}] [Disconnect] {user.Login}"
+                        );
+
+                        lock (connectedUsersLockObject)
                         {
                             _connectedUsers.Remove(user);
                         }
-                        UserDisconnected.Invoke(this,
+
+                        UserDisconnected?.Invoke(this,
                             new UserDisconnectedEventArgs { User = user });
+
                         break;
                     }
-                    if (baseRequest?.Type == RequestType.Add)
+
+                    if (baseRequest.Type == RequestType.Add)
                     {
-                        //var concreteRequest = JsonSerializer.Deserialize<>(json);
+                        await WriteLogAsync($"[{DateTime.Now:HH:mm:ss}] [ADD] Request from {user.Login}");
                     }
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"HandleConnectedUserAsync: {ex.Message}");
+                await WriteLogAsync($"[ERROR] HandleConnectedUserAsync: {ex.Message}");
+            }
+            finally
+            {
+                try
+                {
+                    user.Client?.Close();
+                }
+                catch { }
             }
         }
+
         private async Task RespondToSenderAsync(TcpClient sender, Response response, CancellationToken token)
         {
-            Console.WriteLine("In RespondToSenderAsync");
-            var json = JsonSerializer.Serialize(response);
-            var data = Encoding.UTF8.GetBytes(json);
-            await sender.GetStream().WriteAsync(data, 0, data.Length, token);
+            try
+            {
+                var json = JsonSerializer.Serialize(response);
+                var data = Encoding.UTF8.GetBytes(json);
+
+                await WriteLogAsync($"[SEND] {json}");
+
+                await sender.GetStream().WriteAsync(data, 0, data.Length, token);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"RespondToSenderAsync: {ex.Message}");
+                await WriteLogAsync($"[ERROR] RespondToSenderAsync: {ex.Message}");
+            }
         }
+
+        private async Task WriteLogAsync(string message)
+        {
+            try
+            {
+                MessageReceived?.Invoke(this, new MessageReceivedEventArgs { Message = message });
+                await _db.AddLogAsync(message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"WriteLogAsync error: {ex.Message}");
+            }
+        }
+
         public async Task StopAsync()
         {
-            _cts.Cancel();
-            _server.Stop();
-            foreach (var user in _connectedUsers)
+            _cts?.Cancel();
+            _server?.Stop();
+
+            if (_connectedUsers != null)
             {
-                user.Client.Close();
+                foreach (var user in _connectedUsers)
+                {
+                    try
+                    {
+                        user.Client?.Close();
+                    }
+                    catch { }
+                }
             }
+
+            await WriteLogAsync($"[{DateTime.Now:HH:mm:ss}] SERVER STOPPED");
         }
     }
 }
